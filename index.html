@@ -270,6 +270,17 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(212, 165, 116, 0.1);
         }
+
+        .service-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .service-link .service-card {
+            height: 100%;
+            cursor: pointer;
+        }
         
         .service-card::before {
             content: '';
@@ -680,11 +691,13 @@
         </div>
         
         <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-number">01</div>
-                <h3 data-i18n="services.items.geo.title">生成式引擎优化 (GEO)</h3>
-                <p data-i18n="services.items.geo.body">针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
-            </div>
+            <a class="service-link reveal" href="./geo-credit-card/" aria-label="Open GEO credit card case page">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <h3 data-i18n="services.items.geo.title">生成式引擎优化 (GEO)</h3>
+                    <p data-i18n="services.items.geo.body">针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
+                </div>
+            </a>
             
             <div class="service-card reveal">
                 <div class="service-number">02</div>
