@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSE AI - 让AI成为营销增长引擎</title>
+    <title>SENSE AI - Let AI Power Marketing Growth</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -68,6 +68,35 @@
             display: flex;
             gap: 2.5rem;
             list-style: none;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .lang-switch {
+            display: inline-flex;
+            border: 1px solid rgba(212, 165, 116, 0.25);
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .lang-switch button {
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            padding: 0.5rem 0.85rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .lang-switch button.active {
+            background: var(--navy);
+            color: white;
         }
         
         .nav-links a {
@@ -562,6 +591,11 @@
             .nav-links {
                 display: none;
             }
+
+            .nav-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
             
             .hero {
                 padding: 6rem 5% 4rem;
@@ -608,25 +642,31 @@
     <nav>
         <div class="container">
             <div class="logo">SENSE AI</div>
-            <ul class="nav-links">
-                <li><a href="#services">服务</a></li>
-                <li><a href="#about">关于</a></li>
-                <li><a href="#contact">联系</a></li>
-            </ul>
+            <div class="nav-actions">
+                <ul class="nav-links">
+                    <li><a href="#services" data-i18n="nav.services">服务</a></li>
+                    <li><a href="#about" data-i18n="nav.about">关于</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">联系</a></li>
+                </ul>
+                <div class="lang-switch" aria-label="Language Switcher">
+                    <button type="button" class="active" data-lang-button="zh">中</button>
+                    <button type="button" data-lang-button="en">EN</button>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <div class="hero-label">AI for Marketing</div>
-            <h1>让AI成为<br>营销增长引擎</h1>
-            <p class="hero-subtitle">
+            <div class="hero-label" data-i18n="hero.label">AI for Marketing</div>
+            <h1 data-i18n-html="hero.title">让AI成为<br>营销增长引擎</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
                 从生成式引擎优化到智能营销体系，SENSE AI 帮助企业在AI时代重新定义营销ROI
             </p>
             <div class="cta-buttons">
-                <a href="#contact" class="btn btn-primary">开始咨询</a>
-                <a href="#services" class="btn btn-secondary">了解服务</a>
+                <a href="#contact" class="btn btn-primary" data-i18n="hero.primaryCta">开始咨询</a>
+                <a href="#services" class="btn btn-secondary" data-i18n="hero.secondaryCta">了解服务</a>
             </div>
         </div>
     </section>
@@ -634,46 +674,46 @@
     <!-- Services Section -->
     <section id="services" class="services">
         <div class="section-header reveal">
-            <div class="section-label">核心服务</div>
-            <h2>全链路AI营销解决方案</h2>
-            <p>从品牌曝光到客户转化，我们提供覆盖全营销链路的AI智能化服务</p>
+            <div class="section-label" data-i18n="services.label">核心服务</div>
+            <h2 data-i18n="services.title">全链路AI营销解决方案</h2>
+            <p data-i18n="services.subtitle">从品牌曝光到客户转化，我们提供覆盖全营销链路的AI智能化服务</p>
         </div>
         
         <div class="services-grid">
             <div class="service-card reveal">
                 <div class="service-number">01</div>
-                <h3>生成式引擎优化 (GEO)</h3>
-                <p>针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
+                <h3 data-i18n="services.items.geo.title">生成式引擎优化 (GEO)</h3>
+                <p data-i18n="services.items.geo.body">针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
             </div>
             
             <div class="service-card reveal">
                 <div class="service-number">02</div>
-                <h3>Marketing AI Agent</h3>
-                <p>定制化营销智能体，自动化内容创作、数据分析、用户洞察等营销工作流，提升团队效率10倍</p>
+                <h3 data-i18n="services.items.agent.title">Marketing AI Agent</h3>
+                <p data-i18n="services.items.agent.body">定制化营销智能体，自动化内容创作、数据分析、用户洞察等营销工作流，提升团队效率10倍</p>
             </div>
             
             <div class="service-card reveal">
                 <div class="service-number">03</div>
-                <h3>企业AI培训</h3>
-                <p>从概念到实践，帮助企业团队掌握AI营销工具和方法论，培养AI时代的营销人才</p>
+                <h3 data-i18n="services.items.training.title">企业AI培训</h3>
+                <p data-i18n="services.items.training.body">从概念到实践，帮助企业团队掌握AI营销工具和方法论，培养AI时代的营销人才</p>
             </div>
             
             <div class="service-card reveal">
                 <div class="service-number">04</div>
-                <h3>OpenClaw场景实验室</h3>
-                <p>为企业搭建专属的AI实验环境，快速验证营销创意和AI应用场景，降低试错成本</p>
+                <h3 data-i18n="services.items.lab.title">OpenClaw场景实验室</h3>
+                <p data-i18n="services.items.lab.body">为企业搭建专属的AI实验环境，快速验证营销创意和AI应用场景，降低试错成本</p>
             </div>
             
             <div class="service-card reveal">
                 <div class="service-number">05</div>
-                <h3>企业主AI社群</h3>
-                <p>连接前沿的AI+营销实践者，分享案例、交流经验、共同成长</p>
+                <h3 data-i18n="services.items.community.title">企业主AI社群</h3>
+                <p data-i18n="services.items.community.body">连接前沿的AI+营销实践者，分享案例、交流经验、共同成长</p>
             </div>
             
             <div class="service-card reveal">
                 <div class="service-number">06</div>
-                <h3>创客AI公众号</h3>
-                <p>持续输出AI营销洞察、工具测评、实战案例，帮助创业者和营销人把握AI趋势</p>
+                <h3 data-i18n="services.items.media.title">创客AI公众号</h3>
+                <p data-i18n="services.items.media.body">持续输出AI营销洞察、工具测评、实战案例，帮助创业者和营销人把握AI趋势</p>
             </div>
         </div>
     </section>
@@ -682,29 +722,29 @@
     <section id="about" class="about">
         <div class="about-content">
             <div class="about-text reveal">
-                <h2>关于创始人</h2>
-                <p>
+                <h2 data-i18n="about.title">关于创始人</h2>
+                <p data-i18n="about.paragraph1">
                     Vicky Zhang，SENSE AI 创始人，深耕营销领域多年，是AI营销实践的先行者和布道者。
                 </p>
-                <p>
+                <p data-i18n="about.paragraph2">
                     从传统营销到数字营销，再到AI营销，Vicky见证并参与了营销行业的每一次变革。她相信，AI不是替代营销人，而是让营销人拥有超能力。
                 </p>
-                <p>
+                <p data-i18n="about.paragraph3">
                     通过SENSE AI，她致力于帮助更多企业和个人在AI时代找到营销的新范式。
                 </p>
                 
                 <div class="about-stats">
                     <div class="stat">
                         <span class="stat-number">10+</span>
-                        <span class="stat-label">年营销经验</span>
+                        <span class="stat-label" data-i18n="about.stats.experience">年营销经验</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">50+</span>
-                        <span class="stat-label">服务企业</span>
+                        <span class="stat-label" data-i18n="about.stats.clients">服务企业</span>
                     </div>
                     <div class="stat">
                         <span class="stat-number">100+</span>
-                        <span class="stat-label">实战案例</span>
+                        <span class="stat-label" data-i18n="about.stats.cases">实战案例</span>
                     </div>
                 </div>
             </div>
@@ -712,11 +752,11 @@
             <div class="about-image reveal">
                 <div class="founder-info">
                     <h3>Vicky Zhang</h3>
-                    <span class="founder-title">创始人 & AI营销顾问</span>
-                    <p class="founder-bio">
+                    <span class="founder-title" data-i18n="about.founderTitle">创始人 & AI营销顾问</span>
+                    <p class="founder-bio" data-i18n="about.quote">
                         "在AI时代，营销的本质没变，变的是我们触达客户、创造价值的方式。SENSE AI的使命，就是帮助每一个营销人拥抱这个变化。"
                     </p>
-                    <a href="#contact" class="founder-link">
+                    <a href="#contact" class="founder-link" data-i18n="about.contactLink">
                         联系我 →
                     </a>
                 </div>
@@ -727,21 +767,21 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="contact-content reveal">
-            <h2>开启AI营销之旅</h2>
-            <p>无论你是企业主、营销人，还是AI爱好者，都欢迎与我们交流</p>
+            <h2 data-i18n="contact.title">开启AI营销之旅</h2>
+            <p data-i18n="contact.subtitle">无论你是企业主、营销人，还是AI爱好者，都欢迎与我们交流</p>
             
             <div class="contact-methods">
                 <a href="mailto:hello@senseyes.net" class="contact-method">
-                    <span class="contact-method-label">邮箱</span>
+                    <span class="contact-method-label" data-i18n="contact.emailLabel">邮箱</span>
                     <span class="contact-method-value">hello@senseyes.net</span>
                 </a>
                 <button class="contact-method" onclick="openWechatModal()" style="border: 1px solid rgba(212, 165, 116, 0.2); background: white; cursor: pointer;">
-                    <span class="contact-method-label">微信</span>
-                    <span class="contact-method-value">扫码添加</span>
+                    <span class="contact-method-label" data-i18n="contact.wechatLabel">微信</span>
+                    <span class="contact-method-value" data-i18n="contact.wechatValue">扫码添加</span>
                 </button>
                 <button class="contact-method" onclick="openOfficialModal()" style="border: 1px solid rgba(212, 165, 116, 0.2); background: white; cursor: pointer;">
-                    <span class="contact-method-label">公众号</span>
-                    <span class="contact-method-value">创客AI</span>
+                    <span class="contact-method-label" data-i18n="contact.officialLabel">公众号</span>
+                    <span class="contact-method-value" data-i18n="contact.officialValue">创客AI</span>
                 </button>
             </div>
         </div>
@@ -751,9 +791,9 @@
     <div id="wechatModal" class="modal" onclick="closeWechatModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeWechatModal()">&times;</button>
-            <h3>添加企业微信</h3>
-            <p>扫描二维码,开启AI营销咨询</p>
-            <img src="wechat-qr.png" alt="Vicky WeChat QR Code" class="qr-code">
+            <h3 data-i18n="modals.wechat.title">添加企业微信</h3>
+            <p data-i18n="modals.wechat.subtitle">扫描二维码,开启AI营销咨询</p>
+            <img src="wechat-qr.png" alt="Enterprise WeChat QR Code" class="qr-code" data-i18n-alt="modals.wechat.alt">
         </div>
     </div>
 
@@ -761,19 +801,225 @@
     <div id="officialModal" class="modal" onclick="closeOfficialModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeOfficialModal()">&times;</button>
-            <h3>关注公众号：创客AI</h3>
-            <p>获取最新AI营销洞察与实战案例</p>
-            <img src="wechat-official-qr.png" alt="创客AI 公众号" class="qr-code">
+            <h3 data-i18n="modals.official.title">关注公众号：创客AI</h3>
+            <p data-i18n="modals.official.subtitle">获取最新AI营销洞察与实战案例</p>
+            <img src="wechat-official-qr.png" alt="Maker AI Official Account QR Code" class="qr-code" data-i18n-alt="modals.official.alt">
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 SENSE AI. All rights reserved.</p>
+        <p data-i18n="footer.copyright">&copy; 2026 SENSE AI. All rights reserved.</p>
     </footer>
 
     <!-- Scroll Reveal Script -->
     <script>
+        const translations = {
+            zh: {
+                pageTitle: 'SENSE AI - 让AI成为营销增长引擎',
+                nav: { services: '服务', about: '关于', contact: '联系' },
+                hero: {
+                    label: 'AI for Marketing',
+                    title: '让AI成为<br>营销增长引擎',
+                    subtitle: '从生成式引擎优化到智能营销体系，SENSE AI 帮助企业在AI时代重新定义营销ROI',
+                    primaryCta: '开始咨询',
+                    secondaryCta: '了解服务'
+                },
+                services: {
+                    label: '核心服务',
+                    title: '全链路AI营销解决方案',
+                    subtitle: '从品牌曝光到客户转化，我们提供覆盖全营销链路的AI智能化服务',
+                    items: {
+                        geo: {
+                            title: '生成式引擎优化 (GEO)',
+                            body: '针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性'
+                        },
+                        agent: {
+                            title: 'Marketing AI Agent',
+                            body: '定制化营销智能体，自动化内容创作、数据分析、用户洞察等营销工作流，提升团队效率10倍'
+                        },
+                        training: {
+                            title: '企业AI培训',
+                            body: '从概念到实践，帮助企业团队掌握AI营销工具和方法论，培养AI时代的营销人才'
+                        },
+                        lab: {
+                            title: 'OpenClaw场景实验室',
+                            body: '为企业搭建专属的AI实验环境，快速验证营销创意和AI应用场景，降低试错成本'
+                        },
+                        community: {
+                            title: '企业主AI社群',
+                            body: '连接前沿的AI+营销实践者，分享案例、交流经验、共同成长'
+                        },
+                        media: {
+                            title: '创客AI公众号',
+                            body: '持续输出AI营销洞察、工具测评、实战案例，帮助创业者和营销人把握AI趋势'
+                        }
+                    }
+                },
+                about: {
+                    title: '关于创始人',
+                    paragraph1: 'Vicky Zhang，SENSE AI 创始人，深耕营销领域多年，是AI营销实践的先行者和布道者。',
+                    paragraph2: '从传统营销到数字营销，再到AI营销，Vicky见证并参与了营销行业的每一次变革。她相信，AI不是替代营销人，而是让营销人拥有超能力。',
+                    paragraph3: '通过SENSE AI，她致力于帮助更多企业和个人在AI时代找到营销的新范式。',
+                    stats: {
+                        experience: '年营销经验',
+                        clients: '服务企业',
+                        cases: '实战案例'
+                    },
+                    founderTitle: '创始人 & AI营销顾问',
+                    quote: '"在AI时代，营销的本质没变，变的是我们触达客户、创造价值的方式。SENSE AI的使命，就是帮助每一个营销人拥抱这个变化。"',
+                    contactLink: '联系我 →'
+                },
+                contact: {
+                    title: '开启AI营销之旅',
+                    subtitle: '无论你是企业主、营销人，还是AI爱好者，都欢迎与我们交流',
+                    emailLabel: '邮箱',
+                    wechatLabel: '微信',
+                    wechatValue: '扫码添加',
+                    officialLabel: '公众号',
+                    officialValue: '创客AI'
+                },
+                modals: {
+                    wechat: {
+                        title: '添加企业微信',
+                        subtitle: '扫描二维码，开启AI营销咨询',
+                        alt: '企业微信二维码'
+                    },
+                    official: {
+                        title: '关注公众号：创客AI',
+                        subtitle: '获取最新AI营销洞察与实战案例',
+                        alt: '创客AI公众号二维码'
+                    }
+                },
+                footer: { copyright: '&copy; 2026 SENSE AI. All rights reserved.' }
+            },
+            en: {
+                pageTitle: 'SENSE AI - Let AI Power Marketing Growth',
+                nav: { services: 'Services', about: 'About', contact: 'Contact' },
+                hero: {
+                    label: 'AI for Marketing',
+                    title: 'Let AI Power<br>Marketing Growth',
+                    subtitle: 'From Generative Engine Optimization to intelligent marketing systems, SENSE AI helps companies redefine marketing ROI for the AI era.',
+                    primaryCta: 'Start a Conversation',
+                    secondaryCta: 'Explore Services'
+                },
+                services: {
+                    label: 'Core Services',
+                    title: 'End-to-End AI Marketing Solutions',
+                    subtitle: 'From brand visibility to conversion, we build AI-enabled marketing capabilities across the full customer journey.',
+                    items: {
+                        geo: {
+                            title: 'Generative Engine Optimization (GEO)',
+                            body: 'Content and visibility strategies built for ChatGPT, Perplexity, Gemini, and the new generation of answer engines so your brand remains discoverable in AI-native search.'
+                        },
+                        agent: {
+                            title: 'Marketing AI Agents',
+                            body: 'Custom AI agents for content operations, insight generation, reporting, and workflow automation that help marketing teams move faster with better consistency.'
+                        },
+                        training: {
+                            title: 'Enterprise AI Training',
+                            body: 'Practical training programs that help teams understand AI tools, adopt modern workflows, and build internal confidence around AI-powered marketing.'
+                        },
+                        lab: {
+                            title: 'OpenClaw Use-Case Lab',
+                            body: 'A structured experimentation environment for enterprises to test AI marketing scenarios quickly, validate ideas, and reduce implementation risk.'
+                        },
+                        community: {
+                            title: 'AI Community for Business Owners',
+                            body: 'A high-signal community connecting founders and operators who want to exchange practical knowledge, real cases, and actionable AI growth tactics.'
+                        },
+                        media: {
+                            title: 'Maker AI WeChat Publication',
+                            body: 'Ongoing insights, tools, and case studies focused on AI marketing, designed to help founders and growth teams stay ahead of the curve.'
+                        }
+                    }
+                },
+                about: {
+                    title: 'About the Founder',
+                    paragraph1: 'Vicky Zhang is the founder of SENSE AI, a long-time marketing practitioner, and an active advocate for practical AI adoption in growth and brand strategy.',
+                    paragraph2: 'From traditional marketing to digital transformation and now AI-powered marketing, she has worked through each wave of industry change. Her view is simple: AI does not replace marketers; it expands what great marketers can do.',
+                    paragraph3: 'Through SENSE AI, she helps companies and founders find a more effective operating model for marketing in the AI era.',
+                    stats: {
+                        experience: 'Years in Marketing',
+                        clients: 'Companies Served',
+                        cases: 'Applied Cases'
+                    },
+                    founderTitle: 'Founder & AI Marketing Advisor',
+                    quote: '"The essence of marketing has not changed in the AI era. What changes is how we reach people, create value, and scale trust. SENSE AI exists to help marketers embrace that shift with clarity and confidence."',
+                    contactLink: 'Contact Me →'
+                },
+                contact: {
+                    title: 'Start Your AI Marketing Journey',
+                    subtitle: 'Whether you are a founder, a marketer, or an AI-native operator, we welcome the conversation.',
+                    emailLabel: 'Email',
+                    wechatLabel: 'WeChat',
+                    wechatValue: 'Scan to Connect',
+                    officialLabel: 'Official Account',
+                    officialValue: 'Maker AI'
+                },
+                modals: {
+                    wechat: {
+                        title: 'Connect on Enterprise WeChat',
+                        subtitle: 'Scan the QR code to start an AI marketing conversation.',
+                        alt: 'Enterprise WeChat QR Code'
+                    },
+                    official: {
+                        title: 'Follow Maker AI',
+                        subtitle: 'Get the latest AI marketing insights and practical case studies.',
+                        alt: 'Maker AI Official Account QR Code'
+                    }
+                },
+                footer: { copyright: '&copy; 2026 SENSE AI. All rights reserved.' }
+            }
+        };
+
+        function getNestedValue(object, path) {
+            return path.split('.').reduce((current, key) => current && current[key], object);
+        }
+
+        function applyLanguage(language) {
+            const dictionary = translations[language];
+            if (!dictionary) {
+                return;
+            }
+
+            document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+            document.title = dictionary.pageTitle;
+
+            document.querySelectorAll('[data-i18n]').forEach((element) => {
+                const value = getNestedValue(dictionary, element.dataset.i18n);
+                if (value) {
+                    element.textContent = value;
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+                const value = getNestedValue(dictionary, element.dataset.i18nHtml);
+                if (value) {
+                    element.innerHTML = value;
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+                const value = getNestedValue(dictionary, element.dataset.i18nAlt);
+                if (value) {
+                    element.alt = value;
+                }
+            });
+
+            document.querySelectorAll('[data-lang-button]').forEach((button) => {
+                button.classList.toggle('active', button.dataset.langButton === language);
+            });
+
+            localStorage.setItem('sense-ai-language', language);
+        }
+
+        document.querySelectorAll('[data-lang-button]').forEach((button) => {
+            button.addEventListener('click', () => applyLanguage(button.dataset.langButton));
+        });
+
+        applyLanguage(localStorage.getItem('sense-ai-language') || 'zh');
+
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
