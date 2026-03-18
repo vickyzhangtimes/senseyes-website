@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信用卡 GEO 可见度驾驶舱 — SENSE AI</title>
+    <meta name="description" content="中国银行业信用卡 GEO 可见度总览驾驶舱：四平台对比、推荐池榜单、信源结构分析。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --navy: #0A1628;
+            --deep-blue: #1A2B47;
+            --accent: #D4A574;
+            --light: #F8F9FA;
+            --text: #2C3E50;
+            --text-light: #6B7280;
+            --card-bg: #FFFFFF;
+            --blue: #2563EB;
+            --amber: #D97706;
+            --green: #059669;
+            --red: #DC2626;
+            --slate: #64748B;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: #F0F2F5;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 { font-family: 'Crimson Pro', serif; font-weight: 600; line-height: 1.2; }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1rem 5%;
+            background: var(--navy); z-index: 1000;
+        }
+        nav .container {
+            max-width: 1400px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo a { font-size: 1.35rem; font-weight: 700; color: white; text-decoration: none; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: white; }
+        .nav-badge {
+            font-size: 0.7rem; padding: 0.2rem 0.6rem;
+            background: rgba(212,165,116,0.2); color: var(--accent);
+            border-radius: 2px; letter-spacing: 0.5px;
+        }
+
+        /* ── Dashboard header ── */
+        .dash-header {
+            padding: 5.5rem 5% 2rem;
+            background: var(--navy); color: white;
+        }
+        .dash-header .inner { max-width: 1400px; margin: 0 auto; }
+        .dash-header-top { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
+        .dash-header h1 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: white; }
+        .dash-header .dash-meta { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+        .dash-header .dash-meta span { color: var(--accent); }
+
+        /* ── KPI Cards ── */
+        .kpi-section { padding: 0 5%; margin-top: -2rem; position: relative; z-index: 10; }
+        .kpi-section .inner { max-width: 1400px; margin: 0 auto; }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+        }
+        .kpi-label {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .kpi-value {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--navy);
+            line-height: 1;
+            margin-bottom: 0.35rem;
+        }
+        .kpi-sub {
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+        .kpi-card:nth-child(1)::after { background: var(--blue); }
+        .kpi-card:nth-child(2)::after { background: var(--green); }
+        .kpi-card:nth-child(3)::after { background: var(--amber); }
+        .kpi-card:nth-child(4)::after { background: var(--accent); }
+        .kpi-card:nth-child(5)::after { background: var(--slate); }
+        .kpi-card:nth-child(6)::after { background: var(--navy); }
+
+        /* ── Charts ── */
+        .charts-section { padding: 2rem 5%; }
+        .charts-section .inner { max-width: 1400px; margin: 0 auto; }
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 1.75rem;
+        }
+        .chart-card h3 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 1.25rem;
+        }
+        .chart-wrap { position: relative; width: 100%; }
+        .chart-wrap canvas { width: 100% !important; }
+
+        /* ── Bank Ranking Table ── */
+        .ranking-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .ranking-table th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.6rem 0.75rem;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        .ranking-table td {
+            padding: 0.55rem 0.75rem;
+            border-bottom: 1px solid #F3F4F6;
+            color: var(--text);
+        }
+        .ranking-table tr:hover td { background: #F9FAFB; }
+        .rank-num {
+            display: inline-flex;
+            width: 1.5rem; height: 1.5rem;
+            align-items: center; justify-content: center;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+        }
+        .rank-1 { background: #F59E0B; }
+        .rank-2 { background: #94A3B8; }
+        .rank-3 { background: #B45309; }
+        .rank-other { background: #E5E7EB; color: var(--text-light); }
+        .l-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .l-badge-3 { background: #ECFDF5; color: var(--green); }
+        .l-badge-2 { background: #EFF6FF; color: var(--blue); }
+        .l-badge-1 { background: #FEF3C7; color: var(--amber); }
+
+        /* ── Action Cards ── */
+        .actions-section { padding: 0 5% 2rem; }
+        .actions-section .inner { max-width: 1400px; margin: 0 auto; }
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+        .action-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 1.75rem;
+            border-left: 4px solid;
+        }
+        .action-card:nth-child(1) { border-left-color: var(--red); }
+        .action-card:nth-child(2) { border-left-color: var(--amber); }
+        .action-card:nth-child(3) { border-left-color: var(--green); }
+        .action-card h3 {
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .action-icon {
+            width: 1.5rem; height: 1.5rem;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center; justify-content: center;
+            font-size: 0.75rem;
+            color: white;
+        }
+        .action-card:nth-child(1) .action-icon { background: var(--red); }
+        .action-card:nth-child(2) .action-icon { background: var(--amber); }
+        .action-card:nth-child(3) .action-icon { background: var(--green); }
+        .action-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        .action-card ul {
+            list-style: none; padding: 0; margin-top: 0.75rem;
+        }
+        .action-card li {
+            font-size: 0.85rem;
+            color: var(--text);
+            padding: 0.35rem 0 0.35rem 1.1rem;
+            position: relative;
+        }
+        .action-card li::before {
+            content: '→';
+            position: absolute; left: 0;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        /* ── Download ── */
+        .download-section {
+            padding: 3rem 5%;
+            background: var(--navy);
+            text-align: center;
+        }
+        .download-section .inner { max-width: 800px; margin: 0 auto; }
+        .download-section h2 { font-size: 1.75rem; color: white; margin-bottom: 0.75rem; }
+        .download-section p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; font-size: 0.95rem; }
+        .dl-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-dl {
+            padding: 0.85rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 2px solid;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-dl-primary {
+            background: var(--accent);
+            color: var(--navy);
+            border-color: var(--accent);
+        }
+        .btn-dl-primary:hover { background: transparent; color: var(--accent); }
+        .btn-dl-ghost {
+            background: transparent;
+            color: rgba(255,255,255,0.8);
+            border-color: rgba(255,255,255,0.25);
+        }
+        .btn-dl-ghost:hover { border-color: white; color: white; }
+
+        footer {
+            padding: 2rem 5%;
+            background: var(--navy);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ── Disclaimer ── */
+        .disclaimer-bar {
+            padding: 0.85rem 5%;
+            background: #FFFBEB;
+            border-bottom: 1px solid #FDE68A;
+        }
+        .disclaimer-bar .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+            color: #92400E;
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .charts-grid { grid-template-columns: 1fr; }
+            .actions-grid { grid-template-columns: 1fr; }
+            .dl-buttons { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 480px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+        }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); }
+        .modal.active { display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        .modal-content { background: white; padding: 3rem; max-width: 400px; position: relative; animation: slideUp 0.4s ease; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 2rem; color: #6b7b8d; cursor: pointer; line-height: 1; transition: color 0.3s; }
+        .modal-close:hover { color: var(--navy); }
+        .modal-content h3 { font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem; text-align: center; }
+        .modal-content p { text-align: center; color: #6b7b8d; margin-bottom: 2rem; }
+        .qr-code { width: 100%; max-width: 300px; margin: 0 auto; display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="../../../">SENSE AI</a></div>
+            <ul class="nav-links">
+                <li><a href="../../">GEO 服务</a></li>
+                <li><a href="../">案例报告</a></li>
+                <li><span class="nav-badge">信用卡 GEO 驾驶舱</span></li>
+                <li><a href="javascript:void(0)" onclick="openWechatModal()">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <div class="dash-header">
+        <div class="inner">
+            <div class="dash-header-top">
+                <div>
+                    <h1>中国银行业信用卡 GEO 可见度总览</h1>
+                    <div class="dash-meta">
+                        研究周期 <span>2026年3月</span> · 平台 <span>豆包 / 文心一言 / DeepSeek / 千问</span> · 测试问题 <span>3组</span> · 覆盖银行 <span>16家</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-bar">
+        <div class="inner">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0;margin-top:2px"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 2.5a.75.75 0 110 1.5.75.75 0 010-1.5zM9 11H7V6.5h2V11z"/></svg>
+            <span>本报告仅呈现各银行在生成式 AI 平台中的内容可见度测试结果，不构成任何商业排名、官方评价、产品优劣判断或投资建议。所有数据基于特定时间窗口内的有限样本测试，结果可能随平台算法更新而变化。</span>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <section class="kpi-section">
+        <div class="inner">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">GEO 总分</div>
+                    <div class="kpi-value">72</div>
+                    <div class="kpi-sub">行业整体可见度良好</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">当前 L 级分布</div>
+                    <div class="kpi-value">L3×8</div>
+                    <div class="kpi-sub">L2×5 · L1×3</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">推荐池进入率</div>
+                    <div class="kpi-value">100%</div>
+                    <div class="kpi-sub">四平台均成功生成推荐</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">第一推荐率</div>
+                    <div class="kpi-value">工商</div>
+                    <div class="kpi-sub">11 次出现 · 4 平台 · 3 题全覆盖</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">官方信源支撑率</div>
+                    <div class="kpi-value">25.8%</div>
+                    <div class="kpi-sub">28/96 条来源为官方</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">跨平台稳定性</div>
+                    <div class="kpi-value">68%</div>
+                    <div class="kpi-sub">8/16 银行跨 3+ 平台稳定</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts-section">
+        <div class="inner">
+            <div class="charts-grid">
+                <!-- Radar: Platform Comparison -->
+                <div class="chart-card">
+                    <h3>四平台能力对比雷达图</h3>
+                    <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+                </div>
+
+                <!-- Heatmap-style: Question Type -->
+                <div class="chart-card">
+                    <h3>问题类型 × 推荐银行热力图</h3>
+                    <div class="chart-wrap"><canvas id="heatmapChart"></canvas></div>
+                </div>
+
+                <!-- Bank Ranking -->
+                <div class="chart-card">
+                    <h3>推荐池银行榜单 TOP 16</h3>
+                    <table class="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>银行</th>
+                                <th>总出现</th>
+                                <th>覆盖平台</th>
+                                <th>覆盖题目</th>
+                                <th>GEO 层级</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="rank-num rank-1">1</span></td><td>工商银行</td><td>11</td><td>4</td><td>3</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-2">2</span></td><td>招商银行</td><td>7</td><td>3</td><td>3</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-3">3</span></td><td>中信银行</td><td>6</td><td>4</td><td>3</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">4</span></td><td>中国银行</td><td>6</td><td>4</td><td>3</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">5</span></td><td>农业银行</td><td>6</td><td>3</td><td>2</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">6</span></td><td>建设银行</td><td>5</td><td>3</td><td>2</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">7</span></td><td>浦发银行</td><td>4</td><td>4</td><td>3</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">8</span></td><td>广发银行</td><td>4</td><td>3</td><td>2</td><td><span class="l-badge l-badge-3">L3</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">9</span></td><td>交通银行</td><td>4</td><td>2</td><td>3</td><td><span class="l-badge l-badge-2">L2</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">10</span></td><td>兴业银行</td><td>3</td><td>2</td><td>3</td><td><span class="l-badge l-badge-2">L2</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">11</span></td><td>平安银行</td><td>3</td><td>2</td><td>2</td><td><span class="l-badge l-badge-2">L2</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">12</span></td><td>华夏银行</td><td>2</td><td>2</td><td>2</td><td><span class="l-badge l-badge-2">L2</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">13</span></td><td>邮储银行</td><td>2</td><td>1</td><td>2</td><td><span class="l-badge l-badge-2">L2</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">14</span></td><td>上海银行</td><td>1</td><td>1</td><td>1</td><td><span class="l-badge l-badge-1">L1</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">15</span></td><td>光大银行</td><td>1</td><td>1</td><td>1</td><td><span class="l-badge l-badge-1">L1</span></td></tr>
+                            <tr><td><span class="rank-num rank-other">16</span></td><td>民生银行</td><td>1</td><td>1</td><td>1</td><td><span class="l-badge l-badge-1">L1</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Source Structure -->
+                <div class="chart-card">
+                    <h3>信源结构堆叠图</h3>
+                    <div class="chart-wrap"><canvas id="sourceChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Cards -->
+    <section class="actions-section">
+        <div class="inner">
+            <div class="actions-grid">
+                <div class="action-card">
+                    <h3><span class="action-icon">!</span> 本期最大短板</h3>
+                    <p>官方信源支撑率仅 25.8%，四平台中文心一言官方来源为零。</p>
+                    <ul>
+                        <li>银行官网权益页缺乏 AI 可抽取的结构化字段</li>
+                        <li>第三方内容主导解释权，官方缺乏答案参与</li>
+                        <li>官方内容在信源竞争中处于被动</li>
+                    </ul>
+                </div>
+                <div class="action-card">
+                    <h3><span class="action-icon">⚠</span> 本期新增风险</h3>
+                    <p>L1 银行（部分银行）仅单点可见，推荐池位置不稳定。</p>
+                    <ul>
+                        <li>仅在 1 个平台出现 1 次 — 随时可能跌落至 L0</li>
+                        <li>内容缺乏场景化覆盖，难以被多题型触发</li>
+                        <li>无跨平台稳定性，竞争护城河为零</li>
+                    </ul>
+                </div>
+                <div class="action-card">
+                    <h3><span class="action-icon">✓</span> 本期优先动作</h3>
+                    <p>三项优先行动，帮助银行从当前位置向上突破。</p>
+                    <ul>
+                        <li>围绕高频问题建设可比较权益内容</li>
+                        <li>将权益和规则字段结构化，让 AI 可读取</li>
+                        <li>同步建设官方与第三方信源体系</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download-section">
+        <div class="inner">
+            <h2>下载完整报告</h2>
+            <p>获取含 13 章完整分析、数据表格和策略建议的 GEO 可见度报告</p>
+            <div class="dl-buttons">
+                <a href="../../../geo-credit-card/GEO_V2_Lab_Author.pdf" class="btn-dl btn-dl-primary" download>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 12l-4-4h2.5V2h3v6H12L8 12zm-6 2h12v1.5H2V14z"/></svg>
+                    下载 PDF 报告
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WeChat QR Modal -->
+    <div id="wechatModal" class="modal" onclick="closeWechatModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeWechatModal()">&times;</button>
+            <h3>添加企业微信</h3>
+            <p>扫描二维码，开启AI营销咨询</p>
+            <img src="../../../wechat-qr.png" alt="Enterprise WeChat QR Code" class="qr-code">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SENSE AI · 创客AI GEO Lab · 数据来源：2026年3月实测</p>
+    </footer>
+
+    <!-- Charts JS -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ── Radar: Platform Comparison ──
+        new Chart(document.getElementById('radarChart'), {
+            type: 'radar',
+            data: {
+                labels: ['回答长度', '来源覆盖', '官方支撑', '来源可追溯', '域名多样性'],
+                datasets: [
+                    { label: '豆包', data: [70, 75, 100, 100, 78], borderColor: '#2563EB', backgroundColor: 'rgba(37,99,235,0.08)', pointBackgroundColor: '#2563EB' },
+                    { label: '文心一言', data: [45, 40, 0, 42, 33], borderColor: '#D97706', backgroundColor: 'rgba(217,119,6,0.08)', pointBackgroundColor: '#D97706' },
+                    { label: 'DeepSeek', data: [46, 80, 75, 100, 100], borderColor: '#059669', backgroundColor: 'rgba(5,150,105,0.08)', pointBackgroundColor: '#059669' },
+                    { label: '千问', data: [100, 62, 58, 61, 61], borderColor: '#7C3AED', backgroundColor: 'rgba(124,58,237,0.08)', pointBackgroundColor: '#7C3AED' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: { r: { min: 0, max: 100, ticks: { stepSize: 25, font: { size: 10 } }, pointLabels: { font: { size: 11 } } } },
+                plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 16 } } }
+            }
+        });
+
+        // ── Heatmap as grouped bar: Question Type × Top Banks ──
+        new Chart(document.getElementById('heatmapChart'), {
+            type: 'bar',
+            data: {
+                labels: ['工商','招商','中信','中国','农业','建设','浦发','广发','交通','兴业'],
+                datasets: [
+                    { label: 'Q1 年费减免', data: [4,2,1,2,0,3,1,0,1,1], backgroundColor: '#2563EB' },
+                    { label: 'Q2 积分规则', data: [4,3,3,3,3,2,2,3,2,1], backgroundColor: '#D97706' },
+                    { label: 'Q3 商旅权益', data: [3,2,2,1,3,0,1,1,1,1], backgroundColor: '#059669' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    x: { ticks: { font: { size: 10 } } },
+                    y: { beginAtZero: true, max: 5, ticks: { stepSize: 1, font: { size: 10 } }, title: { display: true, text: '出现次数', font: { size: 11 } } }
+                },
+                plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 16 } } }
+            }
+        });
+
+        // ── Source Structure: Stacked bar ──
+        new Chart(document.getElementById('sourceChart'), {
+            type: 'bar',
+            data: {
+                labels: ['豆包', '文心一言', 'DeepSeek', '千问'],
+                datasets: [
+                    { label: '官方来源', data: [12, 0, 9, 7], backgroundColor: '#2563EB' },
+                    { label: '第三方来源', data: [16, 15, 21, 16], backgroundColor: '#94A3B8' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    x: { stacked: true, ticks: { font: { size: 11 } } },
+                    y: { stacked: true, beginAtZero: true, title: { display: true, text: '来源条数', font: { size: 11 } }, ticks: { font: { size: 10 } } }
+                },
+                plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, padding: 16 } } }
+            }
+        });
+    });
+
+    // WeChat Modal
+    function openWechatModal() {
+        document.getElementById('wechatModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeWechatModal(event) {
+        if (!event || event.target.id === 'wechatModal' || event.target.classList.contains('modal-close')) {
+            document.getElementById('wechatModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('wechatModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    </script>
+</body>
+</html>

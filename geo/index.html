@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEO 生成式引擎优化 — SENSE AI</title>
+    <meta name="description" content="GEO（Generative Engine Optimization）让品牌被AI看见、理解、推荐。SENSE AI 提供从可见度诊断到权威体系建设的完整GEO服务。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0A1628;
+            --deep-blue: #1A2B47;
+            --accent: #D4A574;
+            --light: #F8F9FA;
+            --text: #2C3E50;
+            --text-light: #6B7280;
+            --phase1: #2563EB;
+            --phase2: #D97706;
+            --phase3: #059669;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* ── Navigation ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--navy); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ── Hero ── */
+        .geo-hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            background: var(--navy);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .geo-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(212, 165, 116, 0.08) 0%, transparent 70%);
+        }
+        .geo-hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .geo-hero-label {
+            font-size: 0.875rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.2s;
+        }
+        .geo-hero h1 {
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            color: white;
+            max-width: 800px;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.4s;
+        }
+        .geo-hero h1 span { color: var(--accent); }
+        .geo-hero-sub {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.75);
+            max-width: 650px;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.6s;
+        }
+        .hero-cta {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.8s;
+        }
+        .btn {
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: var(--navy);
+            border-color: var(--accent);
+        }
+        .btn-accent:hover {
+            background: transparent;
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* ── Section shared ── */
+        .section-label {
+            font-size: 0.875rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        /* ── What is GEO ── */
+        .what-is-geo {
+            padding: 6rem 5%;
+            background: white;
+        }
+        .what-is-geo .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .what-is-geo h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        .geo-intro-text {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 800px;
+            line-height: 1.9;
+            margin-bottom: 3rem;
+        }
+        .geo-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 2rem;
+            align-items: center;
+            max-width: 900px;
+        }
+        .geo-compare-box {
+            padding: 2rem;
+            border: 1px solid rgba(212,165,116,0.15);
+            background: var(--light);
+        }
+        .geo-compare-box h4 {
+            font-size: 1.25rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+        .geo-compare-box p {
+            color: var(--text-light);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .geo-compare-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        /* ── L0-L3 Model ── */
+        .l-model {
+            padding: 6rem 5%;
+            background: var(--light);
+        }
+        .l-model .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .l-model h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .l-model-sub {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+        .l-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        .l-card {
+            padding: 2.5rem 2rem;
+            background: white;
+            border: 1px solid rgba(212,165,116,0.12);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .l-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(10,22,40,0.06);
+        }
+        .l-level {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.75rem;
+        }
+        .l-card:nth-child(1) .l-level { color: #94A3B8; }
+        .l-card:nth-child(2) .l-level { color: var(--phase1); }
+        .l-card:nth-child(3) .l-level { color: var(--phase2); }
+        .l-card:nth-child(4) .l-level { color: var(--phase3); }
+        .l-card h4 {
+            font-size: 1.15rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .l-card p {
+            color: var(--text-light);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+        .l-tag {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+        .l-card:nth-child(1) .l-tag { background: #F1F5F9; color: #64748B; }
+        .l-card:nth-child(2) .l-tag { background: #EFF6FF; color: var(--phase1); }
+        .l-card:nth-child(3) .l-tag { background: #FFFBEB; color: var(--phase2); }
+        .l-card:nth-child(4) .l-tag { background: #ECFDF5; color: var(--phase3); }
+
+        /* ── Six Steps ── */
+        .six-steps {
+            padding: 6rem 5%;
+            background: white;
+        }
+        .six-steps .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .six-steps h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .six-steps-sub {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1.25rem;
+        }
+        .step-card {
+            padding: 2rem 1.5rem;
+            background: var(--light);
+            border: 1px solid rgba(212,165,116,0.1);
+            border-top: 3px solid var(--deep-blue);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .step-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(10,22,40,0.06);
+        }
+        .step-num {
+            display: inline-block;
+            width: 2.25rem;
+            height: 2.25rem;
+            line-height: 2.25rem;
+            text-align: center;
+            background: var(--deep-blue);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        .step-card h4 {
+            font-size: 1.1rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+        .step-card .step-desc {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .step-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .step-card ul li {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            padding: 0.2rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .step-card ul li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* ── Three Phases ── */
+        .three-phases {
+            padding: 6rem 5%;
+            background: var(--navy);
+            color: white;
+        }
+        .three-phases .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .three-phases .section-label { color: var(--accent); }
+        .three-phases h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            color: white;
+            margin-bottom: 0.75rem;
+        }
+        .phase-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            padding: 0.35rem 1rem;
+            border: 1px solid rgba(212,165,116,0.4);
+            color: var(--accent);
+            margin-bottom: 3rem;
+        }
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        .phase-card {
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            position: relative;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .phase-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.06);
+        }
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+        .phase-card:nth-child(1)::before { background: var(--phase1); }
+        .phase-card:nth-child(2)::before { background: var(--phase2); }
+        .phase-card:nth-child(3)::before { background: var(--phase3); }
+
+        .phase-stage {
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .phase-card:nth-child(1) .phase-stage { color: #60A5FA; }
+        .phase-card:nth-child(2) .phase-stage { color: #FBBF24; }
+        .phase-card:nth-child(3) .phase-stage { color: #34D399; }
+
+        .phase-card h3 {
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 0.35rem;
+        }
+        .phase-card .phase-en {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-question {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.85);
+            font-style: italic;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .phase-bullets {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+        .phase-bullets li {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.65);
+            padding: 0.25rem 0 0.25rem 1.25rem;
+            position: relative;
+        }
+        .phase-bullets li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .phase-deliver-label {
+            font-size: 0.75rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .phase-deliver {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1.5rem;
+        }
+        .phase-deliver li {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.75);
+            padding: 0.3rem 0 0.3rem 1.25rem;
+            position: relative;
+        }
+        .phase-deliver li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-size: 0.75rem;
+        }
+        .phase-card:nth-child(1) .phase-deliver li::before { color: #60A5FA; }
+        .phase-card:nth-child(2) .phase-deliver li::before { color: #FBBF24; }
+        .phase-card:nth-child(3) .phase-deliver li::before { color: #34D399; }
+
+        .phase-value {
+            padding: 1rem 1.25rem;
+            font-size: 0.95rem;
+            color: white;
+            font-weight: 500;
+            border-left: 3px solid;
+        }
+        .phase-card:nth-child(1) .phase-value { border-color: var(--phase1); background: rgba(37,99,235,0.08); }
+        .phase-card:nth-child(2) .phase-value { border-color: var(--phase2); background: rgba(217,119,6,0.08); }
+        .phase-card:nth-child(3) .phase-value { border-color: var(--phase3); background: rgba(5,150,105,0.08); }
+
+        /* Bottom summary */
+        .phase-summary {
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .phase-summary-text {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 500;
+            max-width: 700px;
+            margin: 0 auto 1rem;
+        }
+        .phase-summary-text span { color: var(--accent); }
+        .phase-arrow-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .phase-arrow-item {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .pa-1 { color: #60A5FA; }
+        .pa-2 { color: #FBBF24; }
+        .pa-3 { color: #34D399; }
+        .pa-arrow { color: rgba(255,255,255,0.3); }
+
+        /* ── CTA ── */
+        .geo-cta {
+            padding: 6rem 5%;
+            background: white;
+            text-align: center;
+        }
+        .geo-cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .geo-cta p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--navy);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--navy);
+            border: 2px solid var(--navy);
+        }
+        .btn-outline:hover {
+            background: var(--navy);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ── Footer ── */
+        footer {
+            padding: 3rem 5%;
+            background: var(--navy);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .steps-grid { grid-template-columns: repeat(3, 1fr); }
+            .l-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .geo-hero { min-height: 60vh; }
+            .steps-grid { grid-template-columns: repeat(2, 1fr); }
+            .phases-grid { grid-template-columns: 1fr; }
+            .l-cards { grid-template-columns: 1fr; }
+            .geo-comparison { grid-template-columns: 1fr; }
+            .geo-compare-arrow { transform: rotate(90deg); }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .phase-arrow-row { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .steps-grid { grid-template-columns: 1fr; }
+        }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); }
+        .modal.active { display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        .modal-content { background: white; padding: 3rem; max-width: 400px; position: relative; animation: slideUp 0.4s ease; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 2rem; color: #6b7b8d; cursor: pointer; line-height: 1; transition: color 0.3s; }
+        .modal-close:hover { color: var(--navy); }
+        .modal-content h3 { font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem; text-align: center; }
+        .modal-content p { text-align: center; color: #6b7b8d; margin-bottom: 2rem; }
+        .qr-code { width: 100%; max-width: 300px; margin: 0 auto; display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="../">SENSE AI</a></div>
+            <ul class="nav-links">
+                <li><a href="#what-is-geo">什么是GEO</a></li>
+                <li><a href="#l-model">评分模型</a></li>
+                <li><a href="#six-steps">六部曲</a></li>
+                <li><a href="#service">服务模式</a></li>
+                <li><a href="javascript:void(0)" onclick="openWechatModal()">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="geo-hero">
+        <div class="geo-hero-content">
+            <div class="geo-hero-label">Generative Engine Optimization</div>
+            <h1>让品牌在AI时代<br><span>被看见、被理解、被推荐</span></h1>
+            <p class="geo-hero-sub">
+                当用户把选择权交给AI，品牌是否出现在推荐池中，决定了你是否还在用户的考虑范围内。<br>
+                GEO 是面向生成式AI的品牌可见度管理体系。
+            </p>
+            <div class="hero-cta">
+                <a href="javascript:void(0)" onclick="openWechatModal()" class="btn btn-accent">获取可见度诊断</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- What is GEO -->
+    <section id="what-is-geo" class="what-is-geo">
+        <div class="inner reveal">
+            <div class="section-label">What is GEO</div>
+            <h2>什么是 GEO</h2>
+            <p class="geo-intro-text">
+                GEO（Generative Engine Optimization，生成式引擎优化）是一套面向 ChatGPT、DeepSeek、豆包、Gemini 等大语言模型的品牌可见度管理方法。<br><br>
+                与传统 SEO 让网页在搜索结果页获得排名不同，GEO 关注的是：<strong>当AI生成回答时，你的品牌是否被纳入候选、内容是否被引用、产品是否被推荐。</strong>
+            </p>
+            <div class="geo-comparison">
+                <div class="geo-compare-box">
+                    <h4>SEO 时代</h4>
+                    <p>用户搜索 → 看网页排名 → 点击进入 → 逐一对比</p>
+                </div>
+                <div class="geo-compare-arrow">→</div>
+                <div class="geo-compare-box">
+                    <h4>GEO 时代</h4>
+                    <p>用户提问 → AI生成答案 → 直接推荐 → 一步决策</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- L0-L3 Model -->
+    <section id="l-model" class="l-model">
+        <div class="inner reveal">
+            <div class="section-label">GEO Visibility Model</div>
+            <h2>AI 可见度评分模型：L0 — L3</h2>
+            <p class="l-model-sub">
+                衡量品牌在AI回答中的"决策影响力"，不是简单的提及次数，而是从看不见到被推荐的四层递进。
+            </p>
+            <div class="l-cards">
+                <div class="l-card">
+                    <div class="l-level">L0</div>
+                    <h4>看不见你</h4>
+                    <p>品牌在AI回答中完全缺席。用户问了相关问题，AI的答案里没有你的名字。</p>
+                    <span class="l-tag">决策影响 0%</span>
+                </div>
+                <div class="l-card">
+                    <div class="l-level">L1</div>
+                    <h4>知道你</h4>
+                    <p>品牌被提及，但仅作为列表中的一个名字，没有内容被引用，无法影响用户判断。</p>
+                    <span class="l-tag">决策影响 ~20%</span>
+                </div>
+                <div class="l-card">
+                    <div class="l-level">L2</div>
+                    <h4>引用你</h4>
+                    <p>AI在组织答案时引用了你的内容、数据或观点作为证据，你开始参与答案的生成。</p>
+                    <span class="l-tag">决策影响 ~60%</span>
+                </div>
+                <div class="l-card">
+                    <div class="l-level">L3</div>
+                    <h4>推荐你</h4>
+                    <p>AI在"怎么选"的场景下明确推荐你，你成为用户决策链路中的首选项。</p>
+                    <span class="l-tag">决策影响 100%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Six Steps -->
+    <section id="six-steps" class="six-steps">
+        <div class="inner reveal">
+            <div class="section-label">GEO Methodology</div>
+            <h2>从诊断到持续优化的 GEO 经营闭环</h2>
+            <p class="six-steps-sub">
+                六个环节构成从"看清现状"到"持续提升"的完整经营闭环，每一步都有明确的输入、输出和判断标准。
+            </p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-num">01</span>
+                    <h4>AI 可见度诊断</h4>
+                    <p class="step-desc">基于真实问题测试 AI 当前如何识别、引用并推荐品牌，建立基线，决定优先介入点。</p>
+                    <ul>
+                        <li>基于真实问题而不是抽象指标</li>
+                        <li>多平台并行观察</li>
+                        <li>区分"被识别"与"被推荐"</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">02</span>
+                    <h4>用户决策地图</h4>
+                    <p class="step-desc">梳理用户从认知到选择的关键决策节点与触发问题，识别真正影响推荐结果的问题入口。</p>
+                    <ul>
+                        <li>认知、比较、筛选、决策分阶段</li>
+                        <li>定位高影响提问场景</li>
+                        <li>对齐问题链与推荐链</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">03</span>
+                    <h4>问题资产体系</h4>
+                    <p class="step-desc">把高频、场景、比较与长尾问题沉淀成结构化矩阵，形成面向 AI 时代的内容建设底盘。</p>
+                    <ul>
+                        <li>降低对临时内容生产的依赖</li>
+                        <li>让问题本身成为长期资产</li>
+                        <li>为持续测试提供标准母题</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">04</span>
+                    <h4>答案工程</h4>
+                    <p class="step-desc">围绕重点问题设计 AI 友好的答案结构，让内容更容易被理解、引用与比较。</p>
+                    <ul>
+                        <li>从营销话术转向答案结构</li>
+                        <li>强化可比较字段</li>
+                        <li>提升回答吸收效率</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">05</span>
+                    <h4>信源体系</h4>
+                    <p class="step-desc">建设官网、案例、知识页与外部权威内容的信任网络，让推荐建立在可验证的信赖依据之上。</p>
+                    <ul>
+                        <li>官方内容负责权威性</li>
+                        <li>外部内容负责解释权</li>
+                        <li>从被看见走向被信任</li>
+                    </ul>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">06</span>
+                    <h4>持续监测</h4>
+                    <p class="step-desc">持续监测多平台 AI 的可见、引用与推荐变化，把监测结果转化为明确的迭代动作。</p>
+                    <ul>
+                        <li>关注变化而不是单次结果</li>
+                        <li>把监测接入经营节奏</li>
+                        <li>形成长期策略闭环</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three-Phase Service -->
+    <section id="service" class="three-phases">
+        <div class="inner reveal">
+            <div class="section-label">GEO Service Model</div>
+            <h2>三阶段服务模式</h2>
+            <span class="phase-badge">GEO 三阶段实施路径</span>
+
+            <div class="phases-grid">
+                <!-- Phase 1 -->
+                <div class="phase-card">
+                    <div class="phase-stage">第一阶段</div>
+                    <h3>可见度诊断</h3>
+                    <div class="phase-en">Report Only</div>
+                    <div class="phase-question">你在哪里？AI 是否看见你？是否进入推荐池？推荐位置与频次？</div>
+                    <div class="phase-deliver-label">我们交付</div>
+                    <ul class="phase-deliver">
+                        <li>AI 可见度报告（四平台）</li>
+                        <li>推荐资格评分（L0–L3）</li>
+                        <li>关键问题缺口识别</li>
+                    </ul>
+                    <div class="phase-value">帮你看清：你有没有被 AI 纳入候选</div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="phase-card">
+                    <div class="phase-stage">第二阶段</div>
+                    <h3>内容与问题资产构建</h3>
+                    <div class="phase-en">Content &amp; Answer</div>
+                    <div class="phase-question">你能不能被理解？用户在问什么？你有没有答案？AI 能不能引用你？</div>
+                    <div class="phase-deliver-label">我们交付</div>
+                    <ul class="phase-deliver">
+                        <li>用户决策问题资产库（30–50 题）</li>
+                        <li>核心答案工程（结构化内容）</li>
+                        <li>内容整改与重写</li>
+                    </ul>
+                    <div class="phase-value">帮你做到：进入 AI 答案生成链路</div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="phase-card">
+                    <div class="phase-stage">第三阶段</div>
+                    <h3>信源与权威体系</h3>
+                    <div class="phase-en">Authority &amp; Distribution</div>
+                    <div class="phase-question">你能不能被推荐？有没有可信信源？是否有外部引用？是否形成一致性？</div>
+                    <div class="phase-deliver-label">我们交付</div>
+                    <ul class="phase-deliver">
+                        <li>第三方信源布局（媒体 / 社区 / KOL）</li>
+                        <li>权威内容分发与引用设计</li>
+                        <li>信源结构优化</li>
+                    </ul>
+                    <div class="phase-value">帮你实现：从"被引用"到"被推荐"</div>
+                </div>
+            </div>
+
+            <div class="phase-summary">
+                <p class="phase-summary-text">
+                    从<span>「被看见」</span>到<span>「被理解」</span>再到<span>「被推荐」</span>，是 AI 时代品牌增长的完整路径
+                </p>
+                <div class="phase-arrow-row">
+                    <span class="phase-arrow-item pa-1">被看见</span>
+                    <span class="phase-arrow-item pa-arrow">→</span>
+                    <span class="phase-arrow-item pa-2">被理解</span>
+                    <span class="phase-arrow-item pa-arrow">→</span>
+                    <span class="phase-arrow-item pa-3">被推荐</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="geo-cta">
+        <div class="reveal">
+            <h2>了解你的品牌在 AI 中的位置</h2>
+            <p>获取一份AI可见度诊断报告，看清你在 ChatGPT、DeepSeek、豆包、Gemini 中的真实表现</p>
+            <div class="cta-buttons">
+                <a href="javascript:void(0)" onclick="openWechatModal()" class="btn btn-primary">预约诊断</a>
+                <a href="./cases/" class="btn btn-outline">查看案例报告</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WeChat QR Modal -->
+    <div id="wechatModal" class="modal" onclick="closeWechatModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeWechatModal()">&times;</button>
+            <h3>添加企业微信</h3>
+            <p>扫描二维码，开启AI营销咨询</p>
+            <img src="../wechat-qr.png" alt="Enterprise WeChat QR Code" class="qr-code">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SENSE AI. All rights reserved.</p>
+    </footer>
+
+    <!-- Scroll Reveal -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // WeChat Modal
+        function openWechatModal() {
+            document.getElementById('wechatModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeWechatModal(event) {
+            if (!event || event.target.id === 'wechatModal' || event.target.classList.contains('modal-close')) {
+                document.getElementById('wechatModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('wechatModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>

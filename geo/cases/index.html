@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEO 案例报告 — SENSE AI</title>
+    <meta name="description" content="SENSE AI GEO 行业案例报告集：银行信用卡、保险、零售等行业的AI可见度诊断与分析。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0A1628;
+            --deep-blue: #1A2B47;
+            --accent: #D4A574;
+            --light: #F8F9FA;
+            --text: #2C3E50;
+            --text-light: #6B7280;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--light); line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Crimson Pro', serif; font-weight: 600; line-height: 1.2; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.5rem 5%;
+            background: rgba(248,249,250,0.95); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 1px solid rgba(212,165,116,0.1);
+        }
+        nav .container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo a { font-size: 1.5rem; font-weight: 700; color: var(--navy); text-decoration: none; letter-spacing: -0.5px; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text); text-decoration: none; font-size: 0.95rem; }
+
+        .page-header {
+            padding: 8rem 5% 4rem;
+            background: var(--navy);
+            color: white;
+        }
+        .page-header .inner { max-width: 1400px; margin: 0 auto; }
+        .page-header-label { font-size: 0.875rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+        .page-header h1 { font-size: clamp(2.5rem, 5vw, 4rem); color: white; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.125rem; color: rgba(255,255,255,0.7); max-width: 600px; }
+
+        .cases-section { padding: 5rem 5%; }
+        .cases-section .inner { max-width: 1400px; margin: 0 auto; }
+        .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2rem; }
+
+        .case-card {
+            background: white;
+            border: 1px solid rgba(212,165,116,0.12);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(10,22,40,0.08);
+        }
+        .case-card-header {
+            padding: 2rem 2rem 1.5rem;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--deep-blue) 100%);
+            color: white;
+        }
+        .case-industry {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .case-card-header h3 { font-size: 1.5rem; color: white; margin-bottom: 0.5rem; }
+        .case-date { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+        .case-card-body { padding: 2rem; }
+        .case-card-body p { color: var(--text-light); line-height: 1.7; margin-bottom: 1.25rem; }
+        .case-stats { display: flex; gap: 1.5rem; }
+        .case-stat { border-left: 2px solid var(--accent); padding-left: 0.75rem; }
+        .case-stat-value { font-family: 'Crimson Pro', serif; font-size: 1.5rem; color: var(--navy); display: block; }
+        .case-stat-label { font-size: 0.8rem; color: var(--text-light); }
+        .case-card-footer { padding: 0 2rem 2rem; }
+        .case-enter {
+            font-size: 0.9rem; color: var(--accent); display: inline-flex; align-items: center; gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+        .case-card:hover .case-enter { gap: 1rem; }
+
+        .coming-soon-card {
+            background: var(--light);
+            border: 2px dashed rgba(212,165,116,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+            text-align: center;
+            padding: 3rem;
+        }
+        .coming-soon-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .coming-soon-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            padding: 3rem 5%;
+            background: var(--navy);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .cases-grid { grid-template-columns: 1fr; }
+            .case-stats { flex-direction: column; gap: 1rem; }
+        }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); }
+        .modal.active { display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        .modal-content { background: white; padding: 3rem; max-width: 400px; position: relative; animation: slideUp 0.4s ease; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 2rem; color: #6b7b8d; cursor: pointer; line-height: 1; transition: color 0.3s; }
+        .modal-close:hover { color: var(--navy); }
+        .modal-content h3 { font-size: 1.5rem; color: var(--navy); margin-bottom: 1rem; text-align: center; }
+        .modal-content p { text-align: center; color: #6b7b8d; margin-bottom: 2rem; }
+        .qr-code { width: 100%; max-width: 300px; margin: 0 auto; display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo"><a href="../../">SENSE AI</a></div>
+            <ul class="nav-links">
+                <li><a href="../">GEO 服务</a></li>
+                <li><a href="javascript:void(0)" onclick="openWechatModal()">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="inner">
+            <div class="page-header-label">GEO Case Studies</div>
+            <h1>GEO 行业案例报告</h1>
+            <p>基于真实问题测试的 AI 可见度诊断，覆盖多个行业的 GEO 驾驶舱视图与完整分析报告</p>
+        </div>
+    </div>
+
+    <section class="cases-section">
+        <div class="inner">
+            <div class="cases-grid">
+                <a class="case-card reveal" href="./credit-card/">
+                    <div class="case-card-header">
+                        <div class="case-industry">银行业 · 信用卡</div>
+                        <h3>中国银行业信用卡 GEO 可见度报告</h3>
+                        <div class="case-date">2026 年 3 月</div>
+                    </div>
+                    <div class="case-card-body">
+                        <p>覆盖豆包、文心一言、DeepSeek、千问四大平台，测试 3 组核心决策问题，分析 16 家银行在 AI 推荐池中的可见度与竞争格局。</p>
+                        <div class="case-stats">
+                            <div class="case-stat">
+                                <span class="case-stat-value">4</span>
+                                <span class="case-stat-label">AI 平台</span>
+                            </div>
+                            <div class="case-stat">
+                                <span class="case-stat-value">16</span>
+                                <span class="case-stat-label">银行覆盖</span>
+                            </div>
+                            <div class="case-stat">
+                                <span class="case-stat-value">12</span>
+                                <span class="case-stat-label">轮回答分析</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="case-card-footer">
+                        <span class="case-enter">查看驾驶舱 →</span>
+                    </div>
+                </a>
+
+                <div class="coming-soon-card reveal">
+                    <div>
+                        <h3>更多行业案例</h3>
+                        <p>保险、零售、教育、B2B SaaS…<br>持续更新中</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WeChat QR Modal -->
+    <div id="wechatModal" class="modal" onclick="closeWechatModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeWechatModal()">&times;</button>
+            <h3>添加企业微信</h3>
+            <p>扫描二维码，开启AI营销咨询</p>
+            <img src="../../wechat-qr.png" alt="Enterprise WeChat QR Code" class="qr-code">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SENSE AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // WeChat Modal
+        function openWechatModal() {
+            document.getElementById('wechatModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeWechatModal(event) {
+            if (!event || event.target.id === 'wechatModal' || event.target.classList.contains('modal-close')) {
+                document.getElementById('wechatModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('wechatModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
