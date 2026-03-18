@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="zh-CN"> 
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+@page { size: A4; margin: 2cm 2cm 2.2cm 2cm; }
+body {
+  font-family: 'Microsoft YaHei', SimHei, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.75;
+  color: #1f2d3d;
+  max-width: 760px;
+  margin: 0 auto;
+}
+h1 { font-size: 22pt; color: #0b4f8a; border-bottom: 2pt solid #0b4f8a; padding-bottom: 8pt; }
+h2 { font-size: 16pt; color: #0b4f8a; margin-top: 20pt; border-left: 4pt solid #0b4f8a; padding-left: 8pt; }
+h3 { font-size: 12.5pt; color: #1f5f9c; margin-top: 14pt; }
+table { width: 100%; border-collapse: collapse; margin: 10pt 0; font-size: 9.5pt; }
+th, td { border: 1pt solid #d7dee6; padding: 6pt; }
+th { background: #eef5fb; }
+blockquote { border-left: 3pt solid #d7dee6; margin: 10pt 0; padding-left: 10pt; color: #5b6b7b; }
+hr { border: none; border-top: 1pt solid #d7dee6; margin: 16pt 0; }
+img { max-width: 100%; display: block; margin: 10pt auto; }
+</style>
+</head>
+<body>
+<h1 id="geo-v2">中国银行业信用卡 GEO 可见度报告 V2</h1>
+<ul>
+<li>版本说明：基于四平台三题真实结果的流水线重建版</li>
+<li>生成时间：2026-03-17 18:04:36</li>
+<li>测试日期：2026-03-12 至 2026-03-13</li>
+<li>平台范围：豆包 / 文心一言 / DeepSeek / 千问</li>
+<li>样本规模：4 平台 × 3 题，共 12 条有效回答</li>
+</ul>
+<h2 id="01">01 执行摘要</h2>
+<p>这份研究关注一个值得银行信用卡业务高度重视的变化：用户选择信用卡的前置决策，正在从搜索引擎、内容攻略和渠道触达，逐步转向直接询问生成式 AI。围绕“出境信用卡哪家好”“哪家信用卡免年费”“出差用什么信用卡比较好”三类高频问题，本报告对豆包、文心一言、DeepSeek、千问四个平台进行了交叉测试。</p>
+<p>测试结果表明，四个平台都已经具备围绕信用卡给出推荐、比较和场景化建议的能力。这说明生成式 AI 已经不再只是信息检索工具，而是在承担信用卡选择的第一轮预决策入口。用户在真正访问银行官网之前，就可能已经在 AI 回答中完成了候选名单筛选、权益对比和初步判断。</p>
+<p>同时，AI 中的信用卡推荐并不是随意生成，而是主要受三类因素影响：内容表达方式、信源结构，以及关键权益字段是否便于比较。换句话说，AI 并不是先理解“哪家银行更强”，而是先读取互联网上那些可识别、可比较、可引用的信用卡信息，再据此组织答案和推荐。</p>
+<p>本轮数据里，四个平台成功率全部为 3/3，平均回答长度上千问最高，为 1918.0，豆包次之，为 1631.0；来源唯一总数上 DeepSeek 最高，为 30；官方来源条数上豆包最多，为 12。跨平台推荐池最稳定的头部银行为 工商银行（11次）、招商银行（7次）、中信银行（6次）、中国银行（6次）、农业银行（6次）。</p>
+<p>因此，信用卡业务接下来要面对的，已经不是“要不要关注生成式 AI”，而是“当前是否已经进入主流 AI 的候选名单、引用体系和推荐链路”。本报告的意义，不只是描述行业变化，更是把这一变化转化为可诊断、可比较、可优化的经营问题。</p>
+<h2 id="02">02 研究背景</h2>
+<h3 id="21">2.1 用户获取信用卡信息的方式正在变化</h3>
+<p>过去，用户了解和选择信用卡，通常要经历广告触达、搜索、阅读攻略、对比权益、回到银行官网申请等多个环节。搜索引擎和内容平台长期承担着主要的信息入口角色。</p>
+<p>现在，越来越多用户会直接向 AI 提问，希望一次性获得整理好的答案。与传统搜索不同，用户不再需要逐条打开网页，而是直接接收一段已经过归纳、比较和筛选的结果。对于信用卡这种规则清晰、权益密集、比较需求强的产品，AI 的这种组织方式尤其容易影响第一轮判断。</p>
+<h3 id="22-ai">2.2 AI 正在承担信用卡的预决策入口</h3>
+<p>在本次测试中，四个平台都能围绕用户问题直接生成候选名单、核心权益比较和选择建议。这意味着用户进入银行官网之前，AI 已经在帮助用户完成“先看谁、先排除谁、先比较什么”的动作。</p>
+<p>对于信用卡业务来说，这一变化非常关键。因为第一轮候选集合往往决定后续的比较范围，而 AI 正在争夺这个入口。谁更早、更稳定地进入 AI 回答体系，谁就更有机会影响用户的初始认知。</p>
+<h3 id="23-ai">2.3 信用卡产品天然适合被 AI 理解和比较</h3>
+<p>不是所有金融产品都像信用卡一样容易被生成式 AI 消化。信用卡的年费规则、返现比例、货币转换费、贵宾厅、接送机、里程和保险等字段都相对明确，而且不同银行之间可以横向比较。</p>
+<p>这意味着，只要银行把这些信息表达得足够清楚，AI 就很容易把它们抽取出来，重组为一套用户能快速理解的对比答案。相反，如果信息散落在不同页面、表述不统一或者缺少关键字段，AI 就难以形成稳定推荐。</p>
+<h3 id="24-seo-geo-ai">2.4 从 SEO 到 GEO：信用卡竞争位置正在延伸到 AI 回答中</h3>
+<p>搜索时代的竞争重点是排名、点击和渠道位；生成式 AI 时代，新增的竞争焦点是是否能被 AI 看见、引用和推荐。对信用卡业务来说，这不是原有渠道竞争的替代，而是新的补充层。</p>
+<p>真正值得关注的，并不是某家银行偶然在某个平台出现一次，而是它能否跨平台、跨题型稳定进入候选名单，并获得相对可靠的信源支撑。</p>
+<h2 id="03">03 研究问题与研究设计</h2>
+<h3 id="31">3.1 核心研究问题</h3>
+<p>本研究主要围绕四个问题展开。第一，AI 是否会把银行或信用卡产品直接纳入候选名单。第二，被看见与被推荐是否是同一回事。第三，不同平台之间的结果是否稳定一致。第四，AI 推荐银行时到底主要依据什么信息。</p>
+<h3 id="32">3.2 研究平台</h3>
+<p>本研究选取豆包、文心一言、DeepSeek、千问四个平台，原因有三点：都支持中文自然语言提问，都能生成比较完整的推荐型回答，同时在来源调取、结构组织和回答机制上存在明显差异，适合做横向比较。</p>
+<h3 id="33">3.3 测试问题</h3>
+<p>三道测试题分别对应三类典型需求：Q1 是选型型问题，考察 AI 能否给出出境用卡候选池；Q2 是规则型问题，考察 AI 如何处理免年费和成本门槛；Q3 是场景型问题，考察 AI 是否能把差旅权益组织成完整解决方案。</p>
+<h3 id="34">3.4 分析维度</h3>
+<p>报告从四个维度拆解 AI 回答：一是候选银行是否被纳入、是否被优先推荐；二是内容如何组织，偏规则盘点、攻略比较还是场景方案；三是信源结构如何，官方来源与第三方来源的比例如何；四是模型最依赖哪些权益字段。</p>
+<h3 id="35">3.5 研究说明</h3>
+<p>本研究使用冻结后的四平台 JSONL 结果做重建，不新增抓取，不重跑模型。目的不是评判哪家信用卡产品本身最优，而是诊断银行在生成式 AI 回答体系中的可见度、被引用能力和被推荐概率。</p>
+<h2 id="04">04 核心发现总览</h2>
+<h3 id="41">4.1 四个平台均已具备信用卡推荐能力</h3>
+<p>从结果上看，四个平台成功率均为 3/3，说明它们都已经能够围绕信用卡问题完成推荐、比较和场景化建议。区别不在于“能不能答”，而在于“答得有多完整、调用多少来源、是否有足够强的官方支撑”。</p>
+<h3 id="1">表1 平台整体表现总览</h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: right;">成功率</th>
+<th style="text-align: right;">平均回答长度</th>
+<th style="text-align: right;">来源唯一总数</th>
+<th style="text-align: right;">官方来源条数</th>
+<th style="text-align: right;">可追溯来源条数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>豆包</td>
+<td style="text-align: right;">3/3</td>
+<td style="text-align: right;">1631.0</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr>
+<td>文心一言</td>
+<td style="text-align: right;">3/3</td>
+<td style="text-align: right;">1042.7</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td style="text-align: right;">3/3</td>
+<td style="text-align: right;">1062.3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td>千问</td>
+<td style="text-align: right;">3/3</td>
+<td style="text-align: right;">1918.0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">23</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- 千问平均回答长度最高，为 1918.0，更倾向给出完整长文式建议。<br />
+- DeepSeek 来源覆盖最广，来源唯一总数达到 30，说明其答案更依赖多来源拼装。<br />
+- 豆包官方来源条数最高，为 12，在权威支撑上更占优势。</p>
+<h3 id="42-ai">4.2 AI 不会只给出单一答案，而是形成跨平台“推荐池”</h3>
+<p>在 12 轮回答中，AI 很少只推荐一家银行，而是形成一个由多家银行构成的候选集合。进入推荐池，意味着已经被纳入用户第一轮考虑范围；跨平台重复出现，则说明这种进入不是偶然。</p>
+<h3 id="5">表5 跨平台推荐频次汇总</h3>
+<table>
+<thead>
+<tr>
+<th>银行</th>
+<th style="text-align: right;">Q1出现</th>
+<th style="text-align: right;">Q2出现</th>
+<th style="text-align: right;">Q3出现</th>
+<th style="text-align: right;">总出现</th>
+<th style="text-align: right;">覆盖平台数</th>
+<th style="text-align: right;">覆盖题目数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工商银行</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>招商银行</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>中信银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>中国银行</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>农业银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>建设银行</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>浦发银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>广发银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>交通银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>兴业银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>平安银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>华夏银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>邮储银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>上海银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>光大银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>民生银行</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- 跨平台最稳定的推荐池由 工商银行（11次）、招商银行（7次）、中信银行（6次）、中国银行（6次）、农业银行（6次） 构成。<br />
+- 对银行来说，先进入推荐池，再争取前排推荐，往往比单次“第一推荐”更有经营意义。</p>
+<h3 id="43">4.3 不同平台的来源覆盖与权威支撑能力差异明显</h3>
+<p>平台差异不只体现在答案长度，还体现在来源数量、域名覆盖和官方支撑程度。对于 GEO 来说，这比“写得长不长”更重要，因为来源结构决定了回答的可追溯性和可信度。</p>
+<h3 id="6">表6 平台来源覆盖与官方支撑对比</h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: right;">来源条目数</th>
+<th style="text-align: right;">唯一域名数</th>
+<th style="text-align: right;">官方来源条数</th>
+<th style="text-align: right;">官方占比</th>
+<th style="text-align: right;">抽取完成率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>豆包</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">42.9%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>文心一言</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0%</td>
+<td style="text-align: right;">41.7%</td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">30.0%</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr>
+<td>千问</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">30.4%</td>
+<td style="text-align: right;">60.5%</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- 豆包和 DeepSeek 在来源抽取和信源组织上都比较稳定。<br />
+- 文心一言可以抓到来源，但在本轮结果里官方来源缺席，第三方内容占比偏高。<br />
+- 千问的长回答能力很强，但来源抽取完整度仍有提升空间。</p>
+<h3 id="44-ai">4.4 AI 更偏好处理规则清晰、字段可比的权益信息</h3>
+<p>AI 并不是平均对待所有信用卡信息。那些规则清楚、能量化、能横向比较的字段，更容易进入模型的比较与推荐逻辑。</p>
+<h3 id="8">表8 关键权益字段提取情况</h3>
+<table>
+<thead>
+<tr>
+<th>权益字段</th>
+<th style="text-align: right;">Q1提及答案数</th>
+<th style="text-align: right;">Q2提及答案数</th>
+<th style="text-align: right;">Q3提及答案数</th>
+<th style="text-align: right;">总提及答案数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>免年费</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>货币转换费</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td>返现</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>贵宾厅</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>接送机</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>里程</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>保险</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td>酒店权益</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>多币种/自动购汇</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- 在 12 条回答里，最稳定进入模型主逻辑的字段是 免年费（10）、返现（10）、贵宾厅（7）、接送机（7）、货币转换费（6）。<br />
+- 这说明信用卡内容建设要优先服务“可比较性”，而不是堆砌营销形容词。</p>
+<h3 id="45">4.5 平台差异本质上是机制差异，而不是表面现象差异</h3>
+<p>本轮差异看起来像是回答长短不同、推荐名单不同，实质上对应着不同的来源调用机制、字段提取能力和内容重组方式。要提升 GEO，可见度优化不能只盯住某一个平台的表面现象，而要同时优化内容结构、信源布局和字段表达。</p>
+<h2 id="05">05 单题深度分析（一）</h2>
+<p>主题：出境信用卡哪家好</p>
+<h3 id="51">5.1 用户问题与决策意图</h3>
+<p>这是一道典型的选型题。用户想要的不是某一张卡的介绍，而是一组可比较的候选名单，以及围绕境外返现、货币转换费、多币种支持和出境权益的横向判断。</p>
+<h3 id="52">5.2 四平台回答结构对比</h3>
+<ul>
+<li>豆包：更像攻略型回答，习惯按人群和出境场景拆推荐，再给出一轮结论。</li>
+<li>文心一言：更偏卡种介绍和要点罗列，结构清楚，但相对保守。</li>
+<li>DeepSeek：偏清单化和快速比较，擅长把重点权益压缩到一页信息里。</li>
+<li>千问：更像完整决策建议，会做梯队推荐、避坑提醒和组合配置。</li>
+</ul>
+<h3 id="53-ai">5.3 推荐银行统计：AI 形成的是“候选池”，不是单一答案</h3>
+<h3 id="2-q1">表2 Q1 推荐银行对比</h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: right;">回答中推荐银行</th>
+<th style="text-align: right;">来源条数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek</td>
+<td style="text-align: right;">工商银行、中信银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>千问</td>
+<td style="text-align: right;">中国银行、工商银行、建设银行、招商银行、交通银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>文心一言</td>
+<td style="text-align: right;">中国银行、工商银行、建设银行、浦发银行</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>豆包</td>
+<td style="text-align: right;">工商银行、建设银行、招商银行、兴业银行、邮储银行</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- Q1 的跨平台高频银行主要是 工商银行（4个平台）、建设银行（3个平台）、中国银行（2个平台）、招商银行（2个平台）、中信银行（1个平台）。<br />
+- 工商银行在本题最稳定，说明它在“出境”这一场景下拥有跨平台共同识别度。</p>
+<h3 id="54">5.4 内容组织特征：攻略化、对比化、场景化是主流表达方式</h3>
+<p>Q1 的回答普遍不像银行官网介绍，更像一篇“出境选卡攻略”。平台会把银行按新手、高频出境、商旅用户等人群拆分，再配合返现和货转费等字段做比较。</p>
+<h3 id="55">5.5 信源来源分析：第三方内容与官方内容共同作用，但权重结构不同</h3>
+<p>从 Q1 的来源结构看，社区/UGC 与媒体内容共同主导了场景塑形，官方内容更多承担规则确认和权益补强。</p>
+<p>Q1 的来源结构为：官方 7、媒体 10、社区/UGC 11、其他 5。</p>
+<h3 id="56-ai">5.6 字段结构分析：AI 主要围绕可比较权益做判断</h3>
+<p>Q1 中提及频率最高的字段主要是 返现（4）、免年费（3）、货币转换费（3）、多币种/自动购汇（3）、贵宾厅（2）。<br />
+这些字段都非常适合被模型做横向比较，因此更容易进入推荐逻辑。</p>
+<h3 id="57">5.7 机制解释与判断</h3>
+<p>在出境信用卡问题上，谁的公开信息更容易被组织成“出境场景解决方案”，谁就更容易进入 AI 的候选池。也就是说，AI 优先读取的是“是否适合比较”，而不是“品牌是否足够强”。</p>
+<h2 id="06">06 单题深度分析（二）</h2>
+<p>主题：哪家信用卡免年费</p>
+<h3 id="61">6.1 用户问题与决策意图</h3>
+<p>这是一道规则型问题。用户的核心关注点不是高端权益，而是持有成本、免年费门槛和规则复杂度。对于 AI 来说，这类问题更像规则汇总任务。</p>
+<h3 id="62">6.2 四平台回答结构：更偏规则汇总，而不是产品故事</h3>
+<ul>
+<li>豆包：偏规则盘点型写法，覆盖银行多，像一张年费规则总表。</li>
+<li>文心一言：回答更克制，集中在几个典型银行和典型规则。</li>
+<li>DeepSeek：强调可执行的减免条件和例外说明，规则感最强。</li>
+<li>千问：会把终身免年费、有效期内免年费、刷免三类规则拆开讲。</li>
+</ul>
+<h3 id="63-q2">6.3 推荐银行统计：Q2 形成的是更广泛的“规则型银行集合”</h3>
+<h3 id="3-q2">表3 Q2 推荐银行对比</h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: right;">回答中推荐银行</th>
+<th style="text-align: right;">来源条数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek</td>
+<td style="text-align: right;">中国银行、工商银行、中信银行、浦发银行、上海银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>千问</td>
+<td style="text-align: right;">中国银行、工商银行、建设银行、农业银行、招商银行、广发银行、交通银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>文心一言</td>
+<td style="text-align: right;">工商银行、农业银行、招商银行、中信银行、广发银行、华夏银行</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>豆包</td>
+<td style="text-align: right;">中国银行、工商银行、建设银行、农业银行、招商银行、中信银行、兴业银行、浦发银行、平安银行、广发银行、交通银行、光大银行、民生银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- Q2 的跨平台高频银行主要是 工商银行（4个平台）、中国银行（3个平台）、中信银行（3个平台）、农业银行（3个平台）、招商银行（3个平台）。<br />
+- 这一题里出现的银行显著多于 Q1，说明年费规则天然更适合被汇总成银行集合。</p>
+<h3 id="64-ai">6.4 内容组织特征：AI 更偏好“规则盘点型内容”</h3>
+<p>Q2 的回答里，平台普遍会先区分终身免年费、有效期内免年费、首年免/刷免等不同规则，再按银行或卡种列举。这说明在规则题里，AI 明显更依赖规则盘点型内容而不是单卡故事。</p>
+<h3 id="65">6.5 信源来源分析：第三方规则汇总内容更容易获得解释权</h3>
+<p>Q2 的来源结构为：官方 12、媒体 6、社区/UGC 14、其他 3。<br />
+可以看到，社区/UGC 和第三方盘点内容在这道题中尤其活跃，说明很多平台在解释年费规则时，仍然主要依赖第三方总结页。</p>
+<h3 id="66-ai">6.6 字段结构分析：AI 最依赖与成本门槛相关的规则字段</h3>
+<p>Q2 中提及频率最高的字段主要是 免年费（4）、返现（4）、货币转换费（2）、多币种/自动购汇（2）、贵宾厅（1）。<br />
+其中“免年费”本身是最核心锚点，而返现、货转费等字段更多承担补充说明作用。</p>
+<h3 id="67">6.7 机制解释与判断</h3>
+<p>在免年费问题里，AI 最偏好那些规则清晰、门槛明确、字段标准化的产品信息。谁能把规则写得更清楚，谁就更容易被纳入候选集合。</p>
+<h2 id="07">07 单题深度分析（三）</h2>
+<p>主题：出差用什么信用卡比较好</p>
+<h3 id="71">7.1 用户问题与决策意图</h3>
+<p>这是一道典型的场景型问题。用户并不只想知道一张卡的单项权益，而是希望获得一套“差旅解决方案”，包括机场、高铁、酒店、接送机、里程与保险等权益组合。</p>
+<h3 id="72">7.2 四平台回答结构：更像“差旅解决方案”，而不是单一产品介绍</h3>
+<ul>
+<li>豆包：偏商旅解决方案，会把机场、高铁、接送机、里程放在同一框架里比较。</li>
+<li>文心一言：更像简版建议清单，覆盖范围较窄但主题聚焦。</li>
+<li>DeepSeek：倾向于抓几个代表性方案，重点强调差旅使用场景。</li>
+<li>千问：最像完整差旅选卡顾问，会把出差人群需求、权益组合和避坑提醒串起来。</li>
+</ul>
+<h3 id="73">7.3 推荐银行统计：场景型问题下，推荐池更集中于商旅权益成熟的银行</h3>
+<h3 id="4-q3">表4 Q3 推荐银行对比</h3>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: right;">回答中推荐银行</th>
+<th style="text-align: right;">来源条数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek</td>
+<td style="text-align: right;">中国银行、工商银行、平安银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>千问</td>
+<td style="text-align: right;">工商银行、农业银行、招商银行、中信银行、浦发银行、交通银行</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>文心一言</td>
+<td style="text-align: right;">农业银行、兴业银行、广发银行</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>豆包</td>
+<td style="text-align: right;">工商银行、农业银行、招商银行、中信银行、平安银行、邮储银行、华夏银行</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- Q3 的跨平台高频银行主要是 工商银行（3个平台）、农业银行（3个平台）、平安银行（2个平台）、招商银行（2个平台）、中信银行（2个平台）。<br />
+- 相比 Q2，Q3 的推荐池更集中，说明场景题对权益组合完整度要求更高。</p>
+<h3 id="74-ai">7.4 内容组织特征：AI 更依赖“商旅场景盘点”而不是普通信用卡介绍</h3>
+<p>Q3 的回答通常会围绕机场贵宾厅、接送机、延误险、酒店礼遇和里程积累来组织，不再只描述某张卡的基础规则。这使得 AI 在场景型问题里更像顾问，而不是数据库。</p>
+<h3 id="75">7.5 信源来源分析：第三方场景内容仍占主体，官方内容提供权威补强</h3>
+<p>Q3 的来源结构为：官方 9、媒体 3、社区/UGC 9、其他 7。<br />
+这道题里官方来源占比相对更高，说明当问题深入到商旅权益组合时，官方规则页和权益页的价值会上升。</p>
+<h3 id="76-ai">7.6 字段结构分析：AI 按“差旅权益组合”组织答案</h3>
+<p>Q3 中提及频率最高的字段主要是 贵宾厅（4）、接送机（4）、保险（4）、免年费（3）、里程（3）。<br />
+这些字段能够被打包成完整的差旅权益结构，因此非常适合被 AI 组织成推荐型回答。</p>
+<h3 id="77">7.7 机制解释与判断</h3>
+<p>在出差场景中，被推荐的关键不是单一参数领先，而是能否被描述成一套完整、可执行、跨场景适配的差旅方案。</p>
+<h2 id="08">08 跨题规律总结</h2>
+<h3 id="81-ai">8.1 AI 首先理解内容，而不是直接理解银行</h3>
+<p>从三道题的共同表现看，AI 不是先理解某家银行，而是先读取互联网上已经存在的攻略、盘点、规则页和权益说明，再把这些信息重组成候选答案。</p>
+<h3 id="82-ai">8.2 信源结构决定银行在 AI 中的可见度</h3>
+<h3 id="7">表7 题目级信源结构</h3>
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th style="text-align: right;">问题</th>
+<th style="text-align: right;">官方</th>
+<th style="text-align: right;">媒体</th>
+<th style="text-align: right;">社区/UGC</th>
+<th style="text-align: right;">监管</th>
+<th style="text-align: right;">其他</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q01</td>
+<td style="text-align: right;">出境信用卡哪家好</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>Q02</td>
+<td style="text-align: right;">哪家信用卡是免年费的</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>Q03</td>
+<td style="text-align: right;">出差用哪个信用卡好，权益比较下</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+<p>谁拥有更完整的信源网络，谁就更容易被看见、被引用、被讲清楚。信用卡行业里，第三方内容对“被看见”影响很大，而官方内容对“被相信”影响更大。</p>
+<h3 id="83-ai">8.3 字段结构决定 AI 是否能够比较产品</h3>
+<p>如果权益信息能够被写成统一字段，比如年费、返现、货转费、贵宾厅、接送机、里程和保险，AI 就更容易横向比较并输出结论。</p>
+<h3 id="84-ai">8.4 AI 推荐的底层机制：不是直接推荐银行，而是沿着“内容—信源—字段”生成答案</h3>
+<p>从机制上看，AI 的推荐链路更像“读取可比较内容—结合信源可信度—抽取关键字段—组织候选池”。因此，信用卡 GEO 不只是内容曝光问题，而是内容结构、信源体系和字段表达的联合作用。</p>
+<h3 id="85-ai">8.5 从内容竞争到 AI 可见度竞争</h3>
+<p>未来银行会同时面对三种竞争：搜索结果中的可见度、渠道与活动中的可见度、生成式 AI 回答中的可见度。第三种竞争已经开始形成。</p>
+<h2 id="09-geo-l0-l3">09 GEO 可见度模型：L0-L3</h2>
+<h3 id="91">9.1 模型定义</h3>
+<ul>
+<li>L0：AI 看不见你。</li>
+<li>L1：AI 看见你，但只做单点提及。</li>
+<li>L2：AI 会把你纳入比较和判断依据。</li>
+<li>L3：AI 稳定推荐你，并进入推荐池前列。</li>
+</ul>
+<h3 id="92">9.2 模型可视化</h3>
+<p>这个模型的意义，在于把“是否出现”进一步拆成“出现得稳不稳、解释得深不深、推荐得靠不靠前”。</p>
+<h3 id="93">9.3 本次研究中的示意落位</h3>
+<h3 id="9-geo">表9 银行 GEO 可见度落位</h3>
+<table>
+<thead>
+<tr>
+<th>银行</th>
+<th style="text-align: right;">总出现</th>
+<th style="text-align: right;">覆盖平台数</th>
+<th style="text-align: right;">覆盖题目数</th>
+<th style="text-align: right;">GEO层级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>工商银行</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>招商银行</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>中信银行</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>中国银行</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>农业银行</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>建设银行</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>浦发银行</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>广发银行</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">L3 稳定推荐</td>
+</tr>
+<tr>
+<td>交通银行</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L2 多平台可见</td>
+</tr>
+<tr>
+<td>兴业银行</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">L2 多平台可见</td>
+</tr>
+<tr>
+<td>平安银行</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">L2 多平台可见</td>
+</tr>
+<tr>
+<td>华夏银行</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">L2 多平台可见</td>
+</tr>
+<tr>
+<td>邮储银行</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">L2 多平台可见</td>
+</tr>
+<tr>
+<td>上海银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">L1 单点可见</td>
+</tr>
+<tr>
+<td>光大银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">L1 单点可见</td>
+</tr>
+<tr>
+<td>民生银行</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">L1 单点可见</td>
+</tr>
+</tbody>
+</table>
+<p>分析：<br />
+- 当前分层结果为：L3 8 家，L2 5 家，L1 3 家。<br />
+- 进入 L3，意味着已经跨题型、跨平台稳定进入推荐池，不再是偶发出现。</p>
+<h3 id="94">9.4 模型的诊断意义</h3>
+<p>L0-L3 的价值不在于给行业做静态排名，而在于帮助团队判断：当前处在哪一层、短板是内容问题还是信源问题、下一步应该优先补哪种能力。</p>
+<h3 id="95">9.5 为什么这一模型适合信用卡业务</h3>
+<p>因为信用卡问题高度标准化、字段可比较、场景明确，所以非常适合用分层模型观察“看见—引用—推荐”的连续过程。</p>
+<h2 id="10-l0-l3">10 从 L0 到 L3：升级路径</h2>
+<h3 id="101-l0-l1-ai">10.1 L0 → L1：让 AI 看见你</h3>
+<p>先补齐产品页、权益页、年费页、FAQ 和高频问题回答，解决“召回不到”的问题。</p>
+<h3 id="102-l1-l2-ai">10.2 L1 → L2：让 AI 理解你</h3>
+<p>把营销话术改写成结构化字段和清晰规则，让模型知道你到底在比什么。</p>
+<h3 id="103-l2-l3-ai">10.3 L2 → L3：让 AI 推荐你</h3>
+<p>增加场景型内容、对比型内容和高质量第三方信源，让模型不仅能提到你，还愿意把你排进推荐池前列。</p>
+<h3 id="104">10.4 升级路径的整体逻辑</h3>
+<p>GEO 优化不是一步到位冲推荐，而是从“先被看见”到“再被理解”，最后进入“稳定被推荐”的状态。</p>
+<h3 id="105">10.5 对银行信用卡业务的现实意义</h3>
+<p>这意味着信用卡内容建设不再只是营销素材生产，而是在建设一套 AI 可以调用的知识资产。</p>
+<h2 id="11">11 对银行信用卡业务的意义与建议</h2>
+<h3 id="111-ai">11.1 信用卡竞争正在前移到 AI 回答阶段</h3>
+<p>用户的第一轮候选集越来越可能由 AI 先生成，因此“进入候选池”本身就成为新的竞争环节。</p>
+<h3 id="112">11.2 内容资产正在从营销素材变成业务基础设施</h3>
+<p>谁的权益规则更清楚、结构更完整、字段更标准化，谁就更容易被 AI 抽取和组织。</p>
+<h3 id="113-seo-geo">11.3 从 SEO 到 GEO：银行正在进入新的可见度竞争</h3>
+<p>未来银行既要关心搜索可见度，也要关心 AI 回答中的可见度。两者会并存，而且相互影响。</p>
+<h3 id="114">11.4 对信用卡中心的三点启示</h3>
+<ul>
+<li>决策入口已经发生变化，AI 开始承担前置筛选。</li>
+<li>信息解释权已经从官网延伸到内容网络。</li>
+<li>单点爆发没有意义，关键是跨平台稳定出现。</li>
+</ul>
+<h3 id="115">11.5 对银行信用卡业务的三点建议</h3>
+<ul>
+<li>围绕高频问题持续建设可比较内容，而不是只写活动公告。</li>
+<li>把权益和规则字段结构化，优先让 AI 能读懂。</li>
+<li>同步建设官方与第三方信源，提升“被看见”和“被相信”的概率。</li>
+</ul>
+<h2 id="12">12 研究结论</h2>
+<h3 id="121">12.1 结论一</h3>
+<p>生成式 AI 已经开始影响信用卡用户的前置认知和第一轮推荐。</p>
+<h3 id="122">12.2 结论二</h3>
+<p>AI 推荐逻辑并不是直接理解银行，而是建立在内容网络、信源结构和字段可比较性之上。</p>
+<h3 id="123">12.3 结论三</h3>
+<p>银行正在进入一个新的竞争维度，也就是 AI 可见度竞争。</p>
+<h3 id="124">12.4 战略判断一</h3>
+<p>信用卡内容资产会越来越像业务基础设施，而不是纯传播素材。</p>
+<h3 id="125">12.5 战略判断二</h3>
+<p>GEO 很可能成为银行数字营销体系中的新增组件，并逐步与 SEO、内容和品牌工作融合。</p>
+<h3 id="126">12.6 总结</h3>
+<p>在生成式 AI 时代，信用卡竞争不只发生在产品之间，也发生在 AI 回答结构之中。谁能更稳定进入回答体系、获得信源支撑并形成结构化表达，谁就更有机会影响用户的初始判断。</p>
+</body>
+</html>
