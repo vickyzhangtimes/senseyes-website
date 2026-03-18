@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSE AI - 让AI成为营销增长引擎</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0A1628;
+            --deep-blue: #1A2B47;
+            --accent: #D4A574;
+            --light: #F8F9FA;
+            --text: #2C3E50;
+            --text-light: #6B7280;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+        
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--navy);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 43, 71, 0.03) 0%, rgba(212, 165, 116, 0.05) 100%);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-label {
+            font-size: 0.875rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.2s;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            color: var(--navy);
+            max-width: 900px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.4s;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.6s;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.8s;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--navy);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--navy);
+            border-color: var(--navy);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--navy);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 8rem 5%;
+            background: white;
+        }
+        
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 5rem;
+        }
+        
+        .section-label {
+            font-size: 0.875rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        .section-header h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 600px;
+        }
+        
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            padding: 3rem;
+            background: var(--light);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(212, 165, 116, 0.1);
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(10, 22, 40, 0.08);
+        }
+        
+        .service-card:hover::before {
+            height: 100%;
+        }
+        
+        .service-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            color: rgba(212, 165, 116, 0.3);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.75rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 8rem 5%;
+            background: var(--navy);
+            color: white;
+        }
+        
+        .about-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .about-text p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .stat {
+            border-left: 2px solid var(--accent);
+            padding-left: 1.5rem;
+        }
+        
+        .stat-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .about-image {
+            position: relative;
+        }
+        
+        .about-image::before {
+            content: 'Vicky Zhang';
+            position: absolute;
+            top: -2rem;
+            right: 0;
+            font-family: 'Crimson Pro', serif;
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.05);
+            font-weight: 300;
+            z-index: 0;
+        }
+        
+        .founder-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3rem;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .founder-info h3 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .founder-title {
+            color: var(--accent);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .founder-bio {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .founder-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+        
+        .founder-link:hover {
+            gap: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 8rem 5%;
+            background: var(--light);
+        }
+        
+        .contact-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+        
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-method {
+            padding: 2rem 3rem;
+            background: white;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(10, 22, 40, 0.08);
+        }
+        
+        .contact-method-label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-method-value {
+            font-size: 1.125rem;
+            color: var(--navy);
+            font-weight: 500;
+        }
+        
+        /* Modal for QR Code */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            max-width: 400px;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: var(--navy);
+        }
+        
+        .modal-content h3 {
+            font-size: 1.5rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .modal-content p {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
+        .qr-code {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background: var(--navy);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+        }
+        
+        footer p {
+            font-size: 0.95rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 6rem 5% 4rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .about-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .contact-methods {
+                flex-direction: column;
+            }
+        }
+        
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">SENSE AI</div>
+            <ul class="nav-links">
+                <li><a href="#services">服务</a></li>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-label">AI for Marketing</div>
+            <h1>让AI成为<br>营销增长引擎</h1>
+            <p class="hero-subtitle">
+                从生成式引擎优化到智能营销体系，SENSE AI 帮助企业在AI时代重新定义营销ROI
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">开始咨询</a>
+                <a href="#services" class="btn btn-secondary">了解服务</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="section-header reveal">
+            <div class="section-label">核心服务</div>
+            <h2>全链路AI营销解决方案</h2>
+            <p>从品牌曝光到客户转化，我们提供覆盖全营销链路的AI智能化服务</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-number">01</div>
+                <h3>生成式引擎优化 (GEO)</h3>
+                <p>针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
+            </div>
+            
+            <div class="service-card reveal">
+                <div class="service-number">02</div>
+                <h3>Marketing AI Agent</h3>
+                <p>定制化营销智能体，自动化内容创作、数据分析、用户洞察等营销工作流，提升团队效率10倍</p>
+            </div>
+            
+            <div class="service-card reveal">
+                <div class="service-number">03</div>
+                <h3>企业AI培训</h3>
+                <p>从概念到实践，帮助企业团队掌握AI营销工具和方法论，培养AI时代的营销人才</p>
+            </div>
+            
+            <div class="service-card reveal">
+                <div class="service-number">04</div>
+                <h3>OpenClaw场景实验室</h3>
+                <p>为企业搭建专属的AI实验环境，快速验证营销创意和AI应用场景，降低试错成本</p>
+            </div>
+            
+            <div class="service-card reveal">
+                <div class="service-number">05</div>
+                <h3>企业主AI社群</h3>
+                <p>连接前沿的AI+营销实践者，分享案例、交流经验、共同成长</p>
+            </div>
+            
+            <div class="service-card reveal">
+                <div class="service-number">06</div>
+                <h3>创客AI公众号</h3>
+                <p>持续输出AI营销洞察、工具测评、实战案例，帮助创业者和营销人把握AI趋势</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-content">
+            <div class="about-text reveal">
+                <h2>关于创始人</h2>
+                <p>
+                    Vicky Zhang，SENSE AI 创始人，深耕营销领域多年，是AI营销实践的先行者和布道者。
+                </p>
+                <p>
+                    从传统营销到数字营销，再到AI营销，Vicky见证并参与了营销行业的每一次变革。她相信，AI不是替代营销人，而是让营销人拥有超能力。
+                </p>
+                <p>
+                    通过SENSE AI，她致力于帮助更多企业和个人在AI时代找到营销的新范式。
+                </p>
+                
+                <div class="about-stats">
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">年营销经验</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">服务企业</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">实战案例</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-image reveal">
+                <div class="founder-info">
+                    <h3>Vicky Zhang</h3>
+                    <span class="founder-title">创始人 & AI营销顾问</span>
+                    <p class="founder-bio">
+                        "在AI时代，营销的本质没变，变的是我们触达客户、创造价值的方式。SENSE AI的使命，就是帮助每一个营销人拥抱这个变化。"
+                    </p>
+                    <a href="#contact" class="founder-link">
+                        联系我 →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content reveal">
+            <h2>开启AI营销之旅</h2>
+            <p>无论你是企业主、营销人，还是AI爱好者，都欢迎与我们交流</p>
+            
+            <div class="contact-methods">
+                <a href="mailto:hello@senseyes.net" class="contact-method">
+                    <span class="contact-method-label">邮箱</span>
+                    <span class="contact-method-value">hello@senseyes.net</span>
+                </a>
+                <button class="contact-method" onclick="openModal()" style="border: 1px solid rgba(212, 165, 116, 0.2); background: white; cursor: pointer;">
+                    <span class="contact-method-label">微信</span>
+                    <span class="contact-method-value">扫码添加</span>
+                </button>
+                <div class="contact-method">
+                    <span class="contact-method-label">公众号</span>
+                    <span class="contact-method-value">创客AI</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WeChat QR Modal -->
+    <div id="wechatModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3>添加企业微信</h3>
+            <p>扫描二维码，开启AI营销咨询</p>
+            <img src="wechat-qr.png" alt="Vicky WeChat QR Code" class="qr-code">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SENSE AI. All rights reserved.</p>
+    </footer>
+
+    <!-- Scroll Reveal Script -->
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        
+        function checkReveal() {
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkReveal);
+        checkReveal(); // Check on page load
+        
+        // WeChat Modal
+        function openModal() {
+            document.getElementById('wechatModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(event) {
+            if (!event || event.target.id === 'wechatModal' || event.target.classList.contains('modal-close')) {
+                document.getElementById('wechatModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
