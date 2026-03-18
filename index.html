@@ -735,25 +735,35 @@
                     <span class="contact-method-label">邮箱</span>
                     <span class="contact-method-value">hello@senseyes.net</span>
                 </a>
-                <button class="contact-method" onclick="openModal()" style="border: 1px solid rgba(212, 165, 116, 0.2); background: white; cursor: pointer;">
+                <button class="contact-method" onclick="openWechatModal()" style="border: 1px solid rgba(212, 165, 116, 0.2); background: white; cursor: pointer;">
                     <span class="contact-method-label">微信</span>
                     <span class="contact-method-value">扫码添加</span>
                 </button>
-                <div class="contact-method">
+                <button class="contact-method" onclick="openOfficialModal()" style="border: 1px solid rgba(212, 165, 116, 0.2); background: white; cursor: pointer;">
                     <span class="contact-method-label">公众号</span>
                     <span class="contact-method-value">创客AI</span>
-                </div>
+                </button>
             </div>
         </div>
     </section>
 
     <!-- WeChat QR Modal -->
-    <div id="wechatModal" class="modal" onclick="closeModal(event)">
+    <div id="wechatModal" class="modal" onclick="closeWechatModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <button class="modal-close" onclick="closeWechatModal()">&times;</button>
             <h3>添加企业微信</h3>
-            <p>扫描二维码，开启AI营销咨询</p>
+            <p>扫描二维码,开启AI营销咨询</p>
             <img src="wechat-qr.png" alt="Vicky WeChat QR Code" class="qr-code">
+        </div>
+    </div>
+
+    <!-- Official Account QR Modal -->
+    <div id="officialModal" class="modal" onclick="closeOfficialModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeOfficialModal()">&times;</button>
+            <h3>关注公众号：创客AI</h3>
+            <p>获取最新AI营销洞察与实战案例</p>
+            <img src="wechat-official-qr.png" alt="创客AI 公众号" class="qr-code">
         </div>
     </div>
 
@@ -796,22 +806,36 @@
         checkReveal(); // Check on page load
         
         // WeChat Modal
-        function openModal() {
+        function openWechatModal() {
             document.getElementById('wechatModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
         
-        function closeModal(event) {
+        function closeWechatModal(event) {
             if (!event || event.target.id === 'wechatModal' || event.target.classList.contains('modal-close')) {
                 document.getElementById('wechatModal').classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         }
         
-        // Close modal with Escape key
+        // Official Account Modal
+        function openOfficialModal() {
+            document.getElementById('officialModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeOfficialModal(event) {
+            if (!event || event.target.id === 'officialModal' || event.target.classList.contains('modal-close')) {
+                document.getElementById('officialModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Close modals with Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                closeModal();
+                closeWechatModal();
+                closeOfficialModal();
             }
         });
     </script>
