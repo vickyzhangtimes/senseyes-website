@@ -3,7 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSE AI - Let AI Power Marketing Growth</title>
+    <title>SENSE AI - 让AI成为营销增长引擎 | GEO生成式引擎优化专家</title>
+    <meta name="description" content="SENSE AI 是专注于生成式引擎优化(GEO)的 AI 营销咨询机构。帮助品牌在 豆包、文心一言、千问、DeepSeek 等 AI 搜索引擎保持可见度。创始人 Vicky Zhang，10 年营销经验，OpenClaw 全球冠军。">
+    <meta property="og:title" content="SENSE AI - 让AI成为营销增长引擎">
+    <meta property="og:description" content="生成式引擎优化(GEO)专家，帮助企业在 AI 时代重新定义营销可见度与 ROI。联系 Vicky Zhang 获取免费基线诊断。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.senseyes.net/">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.senseyes.net/">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -646,7 +654,211 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* News Teaser Section */
+        .news-teaser {
+            padding: 6rem 5%;
+            background: var(--light);
+        }
+
+        .news-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .news-card {
+            background: white;
+            border: 1px solid rgba(212, 165, 116, 0.15);
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(10, 22, 40, 0.08);
+            border-color: var(--accent);
+        }
+
+        .news-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-tag {
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(212, 165, 116, 0.1);
+            padding: 0.25rem 0.75rem;
+        }
+
+        .news-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .news-card h3 {
+            font-size: 1.25rem;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .news-read-more {
+            display: inline-block;
+            margin-top: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+
+        .news-view-all {
+            max-width: 1400px;
+            margin: 2.5rem auto 0;
+            text-align: right;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .faq-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .faq-item {
+            padding: 2rem;
+            border-left: 3px solid rgba(212, 165, 116, 0.3);
+            transition: border-color 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-question {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.2rem;
+            color: var(--navy);
+            font-weight: 600;
+            margin-bottom: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .faq-answer {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "SENSE AI",
+      "alternateName": "SenseEyes",
+      "url": "https://www.senseyes.net",
+      "description": "SENSE AI 是专注于生成式引擎优化(GEO)和 AI 营销的专业咨询机构，帮助品牌在 豆包、文心一言、千问、DeepSeek 等 AI 搜索引擎上建立可见度与权威性。",
+      "foundingDate": "2024",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@senseyes.net",
+        "contactType": "customer service",
+        "availableLanguage": ["Chinese", "English"]
+      },
+      "founder": {
+        "@type": "Person",
+        "name": "Vicky Zhang",
+        "jobTitle": "创始人 & AI营销顾问",
+        "url": "https://www.senseyes.net/#about",
+        "knowsAbout": ["生成式引擎优化", "GEO", "AI营销策略", "Marketing AI Agent", "企业AI培训"],
+                "award": "首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军"
+      },
+      "knowsAbout": ["生成式引擎优化(GEO)", "AI搜索优化", "Marketing AI Agent", "企业AI营销转型", "OpenClaw"]
+    }
+    </script>
+
+    <!-- Structured Data: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "什么是GEO（生成式引擎优化）？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GEO（Generative Engine Optimization，生成式引擎优化）是专门针对 豆包、文心一言、千问、DeepSeek 等 AI 答案引擎的内容与权威性优化策略。与传统 SEO 争夺搜索排名不同，GEO 的目标是让品牌成为 AI 直接给出的推荐答案，从而在新一代 AI 搜索行为中保持可见度与竞争力。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SENSE AI 提供哪些服务？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SENSE AI 提供六大核心服务：①生成式引擎优化(GEO)——帮助品牌被 ChatGPT/Perplexity 推荐；②Marketing AI Agent——定制化营销智能体；③企业AI培训；④OpenClaw 场景实验室；⑤企业主 AI 社群；⑥创客AI公众号内容输出。联系邮箱：hello@senseyes.net。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Vicky Zhang 是谁？她有哪些专业背景？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+                        "text": "Vicky Zhang 是 SENSE AI 创始人，拥有 10 年以上营销经验，是中国早期 GEO（生成式引擎优化）实践者之一。她曾获首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军（广州日报新花城等媒体进行了报道），在 30 名选手中脱颖而出。她深耕 AI 营销领域，帮助企业在 AI 搜索引擎时代建立认知护城河，服务客户遍及金融、消费品等行业。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "GEO 和传统 SEO 有什么区别？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "传统 SEO 针对 Google 等搜索引擎的排名算法优化，目标是出现在蓝链结果列表里。GEO 针对 AI 答案引擎（如 ChatGPT、Perplexity），目标是让 AI 在回答用户问题时主动引用、推荐你的品牌——即直接成为答案本身。随着越来越多用户直接问 AI，GEO 正成为品牌的新核心竞争力。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "企业如何开始 GEO 优化？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SENSE AI 建议从基线测试开始：用目标客户的真实决策问题在 ChatGPT/Perplexity 等 AI 引擎上测试，评估品牌当前可见度（L0 不可见 → L3 被主动推荐）。再针对差距，优化官网结构化数据、发布权威性 FAQ 与案例内容、建立证据工程，逐步提升 AI 引擎的引用频率。可发邮件至 hello@senseyes.net 申请免费基线诊断。"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -656,6 +868,7 @@
             <div class="nav-actions">
                 <ul class="nav-links">
                     <li><a href="#services" data-i18n="nav.services">服务</a></li>
+                    <li><a href="./news/" data-i18n="nav.news">新闻</a></li>
                     <li><a href="#about" data-i18n="nav.about">关于</a></li>
                     <li><a href="#contact" data-i18n="nav.contact">联系</a></li>
                 </ul>
@@ -695,7 +908,7 @@
                 <div class="service-card">
                     <div class="service-number">01</div>
                     <h3 data-i18n="services.items.geo.title">生成式引擎优化 (GEO)</h3>
-                    <p data-i18n="services.items.geo.body">针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
+                    <p data-i18n="services.items.geo.body">针对豆包、文心一言、千问、DeepSeek 等 AI 搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性</p>
                 </div>
             </a>
             
@@ -728,6 +941,46 @@
                 <h3 data-i18n="services.items.media.title">创客AI公众号</h3>
                 <p data-i18n="services.items.media.body">持续输出AI营销洞察、工具测评、实战案例，帮助创业者和营销人把握AI趋势</p>
             </div>
+        </div>
+    </section>
+
+    <!-- News Teaser Section -->
+    <section class="news-teaser">
+        <div class="section-header reveal" style="margin-bottom: 3rem;">
+            <div class="section-label" data-i18n="news.label">最新动态</div>
+            <h2 data-i18n="news.title">新闻 & 动态</h2>
+        </div>
+        <div class="news-grid">
+            <a class="news-card reveal" href="./news/openclaw-champion-2026.html">
+                <div class="news-card-meta">
+                    <span class="news-tag" data-i18n="news.tag.award">新闻稿</span>
+                    <span class="news-date">2026年3月</span>
+                </div>
+                <h3 data-i18n="news.items.openclaw.title">创始人荣获首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军</h3>
+                <p data-i18n="news.items.openclaw.summary">张佩晶（Vicky Zhang）首次参加 Vibe Coding 赛事，在首届腾讯微信龙虾大赛暨企鹅虾友线下赛中从 30 名选手中脱颖而出夺冠。广州日报新花城等媒体进行了报道。</p>
+                <span class="news-read-more" data-i18n="news.readMore">阅读全文 →</span>
+            </a>
+            <div class="news-card reveal">
+                <div class="news-card-meta">
+                    <span class="news-tag" data-i18n="news.tag.report">报告</span>
+                    <span class="news-date">2026年3月</span>
+                </div>
+                <h3>《中国银行业信用卡 GEO 可见度报告 V2》正式发布</h3>
+                <p>首份聚焦中国金融行业的 GEO 基线测评报告，分析 10 家主要银行信用卡在 AI 搜索引擎的可见度现状与差距。</p>
+                <a class="news-read-more" href="./geo-credit-card/" style="text-decoration:none;">查看报告 →</a>
+            </div>
+            <div class="news-card reveal">
+                <div class="news-card-meta">
+                    <span class="news-tag" data-i18n="news.tag.media">媒体</span>
+                    <span class="news-date">2026年</span>
+                </div>
+                <h3 data-i18n="news.items.more.title">更多动态持续更新中</h3>
+                <p data-i18n="news.items.more.summary">演讲、合作、行业洞察…关注公众号「创客AI」获取第一手资讯。</p>
+                <span class="news-read-more" data-i18n="news.viewAll">查看全部新闻 →</span>
+            </div>
+        </div>
+        <div class="news-view-all reveal">
+            <a href="./news/" class="btn btn-secondary" data-i18n="news.allBtn">所有新闻动态</a>
         </div>
     </section>
 
@@ -773,6 +1026,41 @@
                         联系我 →
                     </a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-header reveal" style="margin-bottom: 3rem;">
+            <div class="section-label">FAQ</div>
+            <h2 data-i18n="faq.title">常见问题</h2>
+            <p data-i18n="faq.subtitle">关于 GEO、AI 营销与 SENSE AI 服务你最想了解的问题</p>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item reveal">
+                <div class="faq-question" data-i18n="faq.q1">什么是 GEO 生成式引擎优化？</div>
+                <div class="faq-answer" data-i18n="faq.a1">GEO 是专门针对 豆包、文心一言、千问、DeepSeek 等 AI 答案引擎的优化策略。目标不是搜索排名，而是让 AI 在回答用户问题时主动引用、推荐你的品牌——直接成为答案本身。</div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" data-i18n="faq.q2">GEO 和传统 SEO 有什么区别？</div>
+                <div class="faq-answer" data-i18n="faq.a2">SEO 争的是蓝链排名位置；GEO 争的是 AI 答案里的引用份额（Share of Model）。用户越来越多直接问 AI，GEO 正在成为更前置、更高价值的流量入口。</div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" data-i18n="faq.q3">我的品牌需要 GEO 优化吗？</div>
+                <div class="faq-answer" data-i18n="faq.a3">如果你的客户会在决策时问 AI「哪个品牌/服务更好」，你就需要 GEO。特别适合高决策成本行业：金融、教育、B2B、专业服务等。我们提供免费基线诊断——先测再决策。</div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" data-i18n="faq.q4">SENSE AI 的服务周期和费用如何？</div>
+                <div class="faq-answer" data-i18n="faq.a4">服务根据企业规模和目标定制，从单次诊断咨询到 3-6 个月持续优化项目均可。欢迎发邮件至 hello@senseyes.net，我们会在 24 小时内回复并安排初步沟通。</div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" data-i18n="faq.q5">Vicky Zhang 有哪些代表性成就？</div>
+                <div class="faq-answer" data-i18n="faq.a5">首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军（广州日报新花城等媒体报道）；中国最早系统实践 GEO 方法论的从业者之一；曾为金融、消费品等多行业头部企业提供 AI 营销策略咨询；《中国银行业信用卡 GEO 可见度报告》主要作者。</div>
+            </div>
+            <div class="faq-item reveal">
+                <div class="faq-question" data-i18n="faq.q6">如何快速验证 GEO 效果？</div>
+                <div class="faq-answer" data-i18n="faq.a6">直接在 ChatGPT/Perplexity 等 AI 平台输入你的目标客户会问的问题，看你的品牌是否出现（L0-L3 可见度）。SENSE AI 提供系统化基线测评与改善路线图，帮助你从"AI看不见你"到"AI主动推荐你"。</div>
             </div>
         </div>
     </section>
@@ -830,7 +1118,7 @@
         const translations = {
             zh: {
                 pageTitle: 'SENSE AI - 让AI成为营销增长引擎',
-                nav: { services: '服务', about: '关于', contact: '联系' },
+                nav: { services: '服务', news: '新闻', about: '关于', contact: '联系' },
                 hero: {
                     label: 'AI for Marketing',
                     title: '让AI成为<br>营销增长引擎',
@@ -845,7 +1133,7 @@
                     items: {
                         geo: {
                             title: '生成式引擎优化 (GEO)',
-                            body: '针对ChatGPT、Perplexity、Gemini等AI搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性'
+                            body: '针对豆包、文心一言、千问、DeepSeek 等 AI 搜索引擎的内容优化策略，让你的品牌在AI时代保持可见性'
                         },
                         agent: {
                             title: 'Marketing AI Agent',
@@ -904,11 +1192,42 @@
                         alt: '创客AI公众号二维码'
                     }
                 },
-                footer: { copyright: '&copy; 2026 SENSE AI. All rights reserved.' }
+                footer: { copyright: '&copy; 2026 SENSE AI. All rights reserved.' },
+                news: {
+                    label: '最新动态',
+                    title: '新闻 & 动态',
+                    tag: { award: '获奖', report: '报告', media: '媒体' },
+                    readMore: '阅读全文 →',
+                    viewAll: '查看全部新闻 →',
+                    allBtn: '所有新闻动态',
+                    items: {
+                        openclaw: {
+                            title: '创始人荣获首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军',
+                            summary: '张佩晶（Vicky Zhang）首次参加 Vibe Coding 赛事，在首届腾讯微信龙虾大赛暨企鹅虾友线下赛中从 30 名选手中脱颖而出夺冠。广州日报新花城等媒体进行了报道。'
+                        },
+                        more: { title: '更多动态持续更新中', summary: '演讲、合作、行业洞察…关注公众号「创客AI」获取第一手资讯。' }
+                    }
+                },
+                faq: {
+                    title: '常见问题',
+                    subtitle: '关于 GEO、AI 营销与 SENSE AI 服务你最想了解的问题',
+                    q1: '什么是 GEO 生成式引擎优化？',
+                    a1: 'GEO 是专门针对 豆包、文心一言、千问、DeepSeek 等 AI 答案引擎的优化策略。目标不是搜索排名，而是让 AI 在回答用户问题时主动引用、推荐你的品牌——直接成为答案本身。',
+                    q2: 'GEO 和传统 SEO 有什么区别？',
+                    a2: 'SEO 争的是蓝链排名位置；GEO 争的是 AI 答案里的引用份额（Share of Model）。用户越来越多直接问 AI，GEO 正在成为更前置、更高价值的流量入口。',
+                    q3: '我的品牌需要 GEO 优化吗？',
+                    a3: '如果你的客户会在决策时问 AI「哪个品牌/服务更好」，你就需要 GEO。特别适合高决策成本行业：金融、教育、B2B、专业服务等。我们提供免费基线诊断——先测再决策。',
+                    q4: 'SENSE AI 的服务周期和费用如何？',
+                    a4: '服务根据企业规模和目标定制，从单次诊断咨询到 3-6 个月持续优化项目均可。欢迎发邮件至 hello@senseyes.net，我们会在 24 小时内回复并安排初步沟通。',
+                    q5: 'Vicky Zhang 有哪些代表性成就？',
+                    a5: '首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军（广州日报新花城等媒体报道）；中国最早系统实践 GEO 方法论的从业者之一；曾为金融、消费品等多行业头部企业提供 AI 营销策略咨询；《中国银行业信用卡 GEO 可见度报告》主要作者。',
+                    q6: '如何快速验证 GEO 效果？',
+                    a6: '直接在 ChatGPT/Perplexity 等 AI 平台输入你的目标客户会问的问题，看你的品牌是否出现（L0-L3 可见度）。SENSE AI 提供系统化基线测评与改善路线图，帮助你从"AI看不见你"到"AI主动推荐你"。'
+                }
             },
             en: {
                 pageTitle: 'SENSE AI - Let AI Power Marketing Growth',
-                nav: { services: 'Services', about: 'About', contact: 'Contact' },
+                nav: { services: 'Services', news: 'News', about: 'About', contact: 'Contact' },
                 hero: {
                     label: 'AI for Marketing',
                     title: 'Let AI Power<br>Marketing Growth',
@@ -923,7 +1242,7 @@
                     items: {
                         geo: {
                             title: 'Generative Engine Optimization (GEO)',
-                            body: 'Content and visibility strategies built for ChatGPT, Perplexity, Gemini, and the new generation of answer engines so your brand remains discoverable in AI-native search.'
+                            body: 'Content and visibility strategies built for Doubao, ERNIE Bot, Qwen, DeepSeek and other AI answer engines so your brand remains discoverable in AI-native search.'
                         },
                         agent: {
                             title: 'Marketing AI Agents',
@@ -982,7 +1301,38 @@
                         alt: 'Maker AI Official Account QR Code'
                     }
                 },
-                footer: { copyright: '&copy; 2026 SENSE AI. All rights reserved.' }
+                footer: { copyright: '&copy; 2026 SENSE AI. All rights reserved.' },
+                news: {
+                    label: 'Latest News',
+                    title: 'News & Updates',
+                    tag: { award: 'Award', report: 'Report', media: 'Media' },
+                    readMore: 'Read More →',
+                    viewAll: 'View All News →',
+                    allBtn: 'All News',
+                    items: {
+                        openclaw: {
+                            title: 'Founder Wins Tencent WeChat\'s First Lobster Competition',
+                            summary: 'Vicky Zhang won the championship at Tencent WeChat\'s First Lobster Competition (Penguin Shrimp Friends Offline Match), competing against 30 contestants in her first-ever Vibe Coding event. Covered by Guangzhou Daily.'
+                        },
+                        more: { title: 'More Updates Coming', summary: 'Speaking, partnerships, industry insights… follow Maker AI WeChat for the latest.' }
+                    }
+                },
+                faq: {
+                    title: 'FAQ',
+                    subtitle: 'Common questions about GEO, AI marketing, and SENSE AI services.',
+                    q1: 'What is Generative Engine Optimization (GEO)?',
+                    a1: 'GEO is the practice of optimizing content and authority signals for AI answer engines like Doubao, ERNIE Bot, Qwen, DeepSeek and other AI answer engines. Unlike SEO, which targets ranked lists, GEO aims to make your brand the answer AI gives directly.',
+                    q2: 'How is GEO different from traditional SEO?',
+                    a2: 'SEO competes for blue-link rankings. GEO competes for Share of Model — how often AI recommends or cites your brand in its answers. As more users ask AI instead of browsing search results, GEO is becoming the higher-value channel.',
+                    q3: 'Does my brand need GEO?',
+                    a3: 'If your customers ask AI "which brand or service is best" before deciding, you need GEO. It is especially valuable in high-consideration industries: finance, B2B, education, and professional services. We offer a free baseline audit — assess before you commit.',
+                    q4: 'What are SENSE AI service timelines and pricing?',
+                    a4: 'Engagements range from one-time diagnostic sessions to 3–6 month continuous optimization programs. Email hello@senseyes.net and we will respond within 24 hours to arrange an initial call.',
+                    q5: "What are Vicky Zhang's key credentials?",
+                    a5: 'Champion of Tencent WeChat\'s First Lobster Competition (Penguin Shrimp Friends Offline Match), reported by Guangzhou Daily; one of China\'s earliest systematic GEO practitioners; AI marketing advisor to enterprises across finance and consumer goods; lead author of the China Credit Card GEO Visibility Report.',
+                    q6: 'How do I quickly test my GEO visibility?',
+                    a6: 'Go to ChatGPT or Perplexity and type questions your target customers actually ask. If your brand does not appear, you are at L0. SENSE AI provides a structured baseline audit and improvement roadmap to take you from invisible to actively recommended.'
+                }
             }
         };
 

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻动态 | SENSE AI</title>
+    <meta name="description" content="SENSE AI 最新动态：获奖、演讲、行业报告、合作消息。Vicky Zhang 及 SENSE AI 在 GEO 生成式引擎优化与 AI 营销领域的最新进展。">
+    <meta property="og:title" content="新闻动态 | SENSE AI">
+    <meta property="og:description" content="SENSE AI 获奖、演讲、行业报告与合作消息汇总。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.senseyes.net/news/">
+    <link rel="canonical" href="https://www.senseyes.net/news/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Structured Data: CollectionPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "SENSE AI 新闻动态",
+      "description": "SENSE AI 及创始人 Vicky Zhang 的最新获奖、演讲、报告与合作消息",
+      "url": "https://www.senseyes.net/news/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "SENSE AI",
+        "url": "https://www.senseyes.net"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --navy: #0A1628;
+            --deep-blue: #1A2B47;
+            --accent: #D4A574;
+            --light: #F8F9FA;
+            --text: #2C3E50;
+            --text-light: #6B7280;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Crimson Pro', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--navy);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            padding: 10rem 5% 5rem;
+            background: var(--navy);
+        }
+
+        .page-hero .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover { color: var(--accent); }
+        .breadcrumb span { margin: 0 0.5rem; }
+
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.125rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            padding: 2rem 5%;
+            background: white;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+            position: sticky;
+            top: 73px;
+            z-index: 100;
+        }
+
+        .filter-bar .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1.1rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--navy);
+            color: white;
+            border-color: var(--navy);
+        }
+
+        /* News List */
+        .news-list {
+            padding: 4rem 5% 6rem;
+        }
+
+        .news-list .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Featured Article */
+        .article-featured {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: white;
+            border: 1px solid rgba(212, 165, 116, 0.15);
+            margin-bottom: 2.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+        }
+
+        .article-featured.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .article-featured:hover {
+            box-shadow: 0 20px 60px rgba(10, 22, 40, 0.1);
+        }
+
+        .article-featured-badge {
+            background: var(--navy);
+            color: var(--accent);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .article-featured-badge .badge-label {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            opacity: 0.7;
+        }
+
+        .article-featured-badge .badge-icon {
+            font-family: 'Crimson Pro', serif;
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .article-featured-content {
+            padding: 3rem;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .article-tag {
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: rgba(212, 165, 116, 0.12);
+            padding: 0.25rem 0.7rem;
+        }
+
+        .article-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .article-featured-content h2 {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            color: var(--navy);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .article-featured-content p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            transition: gap 0.3s ease;
+        }
+
+        .article-featured:hover .read-more {
+            gap: 1rem;
+        }
+
+        /* Article Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            background: white;
+            border: 1px solid rgba(212, 165, 116, 0.15);
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--accent);
+            transition: height 0.3s ease;
+        }
+
+        .article-card.visible { opacity: 1; transform: translateY(0); }
+
+        .article-card:hover {
+            box-shadow: 0 12px 40px rgba(10, 22, 40, 0.08);
+            border-color: rgba(212, 165, 116, 0.35);
+        }
+
+        .article-card:hover::before { height: 100%; }
+
+        .article-card h3 {
+            font-size: 1.2rem;
+            color: var(--navy);
+            margin: 1rem 0 0.75rem;
+            line-height: 1.4;
+        }
+
+        .article-card p {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .article-card .read-more {
+            margin-top: 1.25rem;
+            display: block;
+        }
+
+        /* Placeholder card */
+        .article-card-placeholder {
+            background: white;
+            border: 1px dashed rgba(212, 165, 116, 0.3);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .article-card-placeholder.visible { opacity: 1; transform: translateY(0); }
+
+        .article-card-placeholder p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            background: var(--navy);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .article-featured { grid-template-columns: 1fr; }
+            .article-featured-badge { padding: 2rem; }
+            .articles-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="../" class="logo">SENSE AI</a>
+            <ul class="nav-links">
+                <li><a href="../#services">服务</a></li>
+                <li><a href="./" class="active">新闻</a></li>
+                <li><a href="../#about">关于</a></li>
+                <li><a href="../#contact">联系</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../">首页</a>
+                <span>/</span>
+                新闻动态
+            </div>
+            <h1>新闻 & 动态</h1>
+            <p>获奖、演讲、行业报告与合作 — SENSE AI 的最新进展</p>
+        </div>
+    </section>
+
+    <div class="filter-bar">
+        <div class="container">
+            <span class="filter-label">筛选</span>
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="award">获奖</button>
+            <button class="filter-btn" data-filter="report">报告</button>
+            <button class="filter-btn" data-filter="speaking">演讲</button>
+            <button class="filter-btn" data-filter="media">媒体</button>
+        </div>
+    </div>
+
+    <main class="news-list">
+        <div class="container">
+
+            <!-- Featured Article -->
+            <a class="article-featured" href="./openclaw-champion-2026.html" data-category="award">
+                <div class="article-featured-badge">
+                    <div class="badge-label">Featured</div>
+                    <div class="badge-icon">🏆</div>
+                </div>
+                <div class="article-featured-content">
+                    <div class="article-meta">
+                        <span class="article-tag">新闻稿</span>
+                        <span class="article-date">2026 年 3 月 27 日</span>
+                    </div>
+                            <h2>SENSE AI 创始人张佩晶荣获首届腾讯微信龙虾大赛暨企鹅虾友线下赛冠军</h2>
+                            <p>张佩晶（Vicky Zhang）首次参加 Vibe Coding 赛事，在首届腾讯微信龙虾大赛暨企鹅虾友线下赛中从 30 名选手中脱颖而出夺冠。广州日报新花城等媒体对赛事进行了报道。</p>
+                    <span class="read-more">阅读全文 →</span>
+                </div>
+            </a>
+
+            <!-- Articles Grid -->
+            <div class="articles-grid">
+
+                <a class="article-card" href="../geo-credit-card/" data-category="report">
+                    <div class="article-meta">
+                        <span class="article-tag">报告</span>
+                        <span class="article-date">2026 年 3 月</span>
+                    </div>
+                    <h3>《中国银行业信用卡 GEO 可见度报告 V2》发布</h3>
+                    <p>首份聚焦中国金融行业 GEO 基线的测评报告，对 10 家主要银行信用卡在 ChatGPT、Perplexity 等 AI 引擎的可见度进行系统分析，揭示行业差距与优化机会。</p>
+                    <span class="read-more">查看报告 →</span>
+                </a>
+
+                <div class="article-card-placeholder" data-category="speaking">
+                    <div class="article-meta" style="justify-content: center; margin-bottom: 1rem;">
+                        <span class="article-tag">即将发布</span>
+                    </div>
+                    <p>更多演讲、合作与行业洞察内容持续更新中。<br><br>关注公众号「创客AI」获取第一手资讯。</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SENSE AI. 联系我们：<a href="mailto:hello@senseyes.net">hello@senseyes.net</a></p>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.article-featured, .article-card, .article-card-placeholder').forEach(el => observer.observe(el));
+
+        // Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('[data-category]').forEach(card => {
+                    card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
