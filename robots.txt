@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://senseyes.net/sitemap.xml
